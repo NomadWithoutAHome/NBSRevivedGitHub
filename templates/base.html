@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No Bullsh!t Simpsons</title>
+    <!-- Add Bootstrap and other CSS styles here -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Add your custom CSS styles here -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
+    <!-- Link to the Homer Simpson Revised font -->
+    <link href="https://fonts.cdnfonts.com/css/homer-simpson-revised" rel="stylesheet">
+    <style>
+        /* Custom CSS for the navbar */
+        .simpsons-navbar {
+            background-color: #00b0ff; /* Simpsons blue */
+            font-family: 'Homer Simpson Revised', sans-serif; /* Use the Homer Simpson Revised font */
+        }
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light simpsons-navbar">
+    <a class="navbar-brand text-white" href="/">No Bullsh!t Simpsons</a>
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link text-white" href="/">Home</a>
+        </li>
+        <form class="form-inline my-2 my-lg-0" action="{{ url_for('search') }}" method="get">
+  <input class="form-control mr-sm-2" type="search" placeholder="Search episodes by title" aria-label="Search" name="query">
+
+</form>
+        <!-- Add more navigation links here -->
+    </ul>
+</nav>
+<div class="container mt-4">
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>
