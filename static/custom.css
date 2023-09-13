@@ -13,6 +13,34 @@ body {
 .simpsons-navbar {
     background-color: #00b0ff; /* Simpsons blue */
     font-family: 'Homer Simpson Revised', sans-serif; /* Use the Homer Simpson Revised font with a fallback */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Adjust the shadow as needed */
+}
+
+/* Custom CSS for the quote text */
+.blockquote p {
+    font-family: 'Homer Simpson Revised', sans-serif;
+}
+
+.container h2 {
+    font-family: 'Homer Simpson Revised', sans-serif;
+    text-align: center; /* Center-align the text */
+}
+
+.container h2 span {
+    color: #00b0ff; /* Set the text color to Simpsons blue */
+}
+
+/* Custom CSS for adding a shadow around the video player */
+.video-container {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Adjust the shadow properties as needed */
+    padding: 15px; /* Optional padding for spacing */
+}
+
+/* Media query to hide the chatbox below 768px window width */
+@media (max-width: 1000px) {
+    .chat-container {
+        display: none;
+    }
 }
 
 
