@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
 <div class="container">
@@ -11,15 +11,11 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ episode['Episode Title'] }}</h5>
                     <p class="card-text">
-                        <small class="text-muted">Rating: {{ episode['Rating'] }} - Air Date: {{ episode['Air Date'] }}
-                  - Runtime: {{ episode['Runtime'] }} - Episode: {{ snum }}{{ episode['Episode Number'] }}</small>
+                        <small class="text-muted">Rating: {{ episode.get('Rating', '') }} - Air Date: {{ episode.get('Air Date', '') }}
+                  - Runtime: {{ episode.get('Runtime', '') }} - Episode: {{ season_number }}x{{ episode['Episode Number'] }}</small>
                     </p>
-                    <p class="card-text">{{ episode['Episode Description'] }}</p>
-                    <a href="{{ url_for('video', video_uuid=episode['uuid']) }}" class="btn btn-primary btn-block" target="_blank">Watch</a>
-
-
-
-
+                    <p class="card-text">{{ episode.get('Episode Description', '')|safe }}</p>
+                    <a href="{{ url_for('video', video_uuid=episode.get('uuid', '')) }}" class="btn btn-primary btn-block" target="_blank">Watch</a>
                 </div>
             </div>
         </div>

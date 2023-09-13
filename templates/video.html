@@ -1,9 +1,9 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
 <div class="container">
     <div class="embed-responsive embed-responsive-16by9">
-        <iframe src="{{ video_url }}" frameborder="0" allowfullscreen class="embed-responsive-item"></iframe>
+        <iframe src="{{ video_url }}" class="embed-responsive-item" allowfullscreen frameborder="0" allow="fullscreen"></iframe>
     </div>
 </div>
 {% endblock %}
