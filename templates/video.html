@@ -19,3 +19,40 @@
     </div>
 </div>
 {% endblock %}
+
+<!-- Add the JavaScript code here -->
+<script>
+// Define the XPath expression for the element you want to find
+const targetXPath = "/html/body/div[1]/main/button";
+
+// Function to check if the target element exists
+function checkForElement() {
+  const targetElement = document.evaluate(targetXPath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+
+  if (targetElement) {
+    // Element found, you can now perform actions on it
+    console.log("Element found:", targetElement);
+
+    // Example: Click the element
+    targetElement.click();
+  } else {
+    // Element not found, continue observing DOM changes
+    console.log("Element not found, observing...");
+  }
+}
+
+// Function to start observing DOM changes
+function startObserving() {
+  const observer = new MutationObserver(() => {
+    checkForElement();
+  });
+
+  // Configure the observer to watch for subtree changes
+  observer.observe(document, { subtree: true, childList: true });
+}
+
+// Wait for the page to fully load before starting observation
+window.addEventListener('load', startObserving);
+</script>
+</body>
+</html>

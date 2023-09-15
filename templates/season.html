@@ -14,7 +14,7 @@
                             - Runtime: {{ episode.get('Runtime', '') }} - Episode: {{ season_number }}x{{ episode['Episode Number'] }}</small>
                     </p>
                     <p class="card-text">{{ episode.get('Episode Description', '')|safe }}</p>
-                    <a href="{{ url_for('video', video_uuid=episode.get('uuid', '')) }}" class="btn btn-primary btn-block" target="_blank">Watch</a>
+                    <a href="{{ url_for('video', video_uuid=episode.get('uuid', '')) }}" class="btn btn-primary btn-block">Watch</a>
                 </div>
             </div>
         </div>
