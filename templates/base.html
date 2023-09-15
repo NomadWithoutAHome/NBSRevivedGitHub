@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>No Bullsh!t Simpsons</title>
-    <!-- Add Bootstrap and other CSS styles here -->
+
+    <!-- Combined CSS files -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Add your custom CSS styles here -->
     <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
+
+    <!-- Preload custom fonts (example) -->
+    <link rel="preload" as="font" href="path-to-your-font.woff" type="font/woff" crossorigin="anonymous">
+
+    <!-- Add other preloads here -->
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light simpsons-navbar">
@@ -16,9 +21,14 @@
         <li class="nav-item">
             <a class="nav-link text-white" href="/">Home</a>
         </li>
-        <form class="form-inline my-2 my-lg-0" action="{{ url_for('search') }}" method="get">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search episodes by title" aria-label="Search" name="query">
-        </form>
+        <li class="nav-item">
+            <a class="nav-link text-white" href="/seasons">Seasons</a>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline my-2 my-lg-0" action="{{ url_for('search') }}" method="get">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search episodes by title" aria-label="Search" name="query">
+            </form>
+        </li>
         <!-- Add more navigation links here -->
     </ul>
 </nav>
@@ -26,5 +36,6 @@
     {% block content %}{% endblock %}
 </div>
 
+<!-- Add JavaScript with the 'defer' attribute here if needed -->
 </body>
 </html>

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+ <div class="row">
+        {% for season in seasons_data %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="{{ season['Poster'] }}" class="card-img rounded-left" alt="Season Image">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title font-weight-bold">Season {{ season['Season'] }}</h5>
+                            <p class="card-text small">{{ season['rating'] }} - {{ season['Year'] }} - {{ season['Episodes'] }} Episodes</p>
+                            <p class="card-text">{{ season['Overview'] }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

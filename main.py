@@ -5,9 +5,15 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__, static_url_path='/static')
 
+def load_json_data(filename):
+    with open(filename, 'r') as file:
+        return json.load(file)
+
 # Load episode data from the JSON file
-with open('episode_data.json', 'r') as file:
-    episode_data = json.load(file)
+episode_data = load_json_data('static/Data/episode_data.json')
+
+# Load season data from the JSON file
+seasons_data = load_json_data('static/Data/season_data.json')
 
 # Define a dictionary to store UUIDs associated with episodes
 episode_uuids = {}
@@ -87,6 +93,10 @@ def search():
         return render_template('search_results.html', query=query, results=search_results)
     else:
         return redirect(url_for('index'))
+
+@app.route('/seasons')
+def seasons():
+    return render_template('seasons.html', seasons_data=seasons_data)
 
 if __name__ == '__main__':
     app.run(port=5002)
