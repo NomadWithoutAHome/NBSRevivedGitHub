@@ -6,7 +6,7 @@
     <div class="row">
         {% for episode in results %}
         <div class="col-md-6">
-            <div class="card mb-3">
+            <div class="card mb-3 shadow"> <!-- Add 'shadow' class here -->
                 <img src="{{ episode['Thumbnail'] }}" class="card-img-top" alt="Episode Thumbnail">
                 <div class="card-body">
                     <h5 class="card-title">{{ episode['Episode Title'] }}</h5>
