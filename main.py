@@ -3,7 +3,9 @@ import uuid
 import requests
 from flask import Flask, render_template, request, redirect, url_for, make_response
 
+
 app = Flask(__name__, static_url_path='/static')
+
 
 def load_json_data(filename):
     with open(filename, 'r') as file:
@@ -30,6 +32,7 @@ def generate_episode_uuids():
 generate_episode_uuids()
 
 # Function to get season data by season number
+
 def get_season_data(season_number):
     season_name = f"Season {season_number}"
     return episode_data.get(season_name, None)
@@ -43,6 +46,7 @@ def get_season_number(episode_title):
     return None
 
 # Function to fetch a random quote from The Simpsons API
+
 def get_random_simpsons_quote():
     response = requests.get('https://thesimpsonsquoteapi.glitch.me/quotes')
     if response.status_code == 200:
@@ -119,6 +123,7 @@ def proxy(url):
         # Create a response with the same content as the target's response
         proxied_response = make_response(response.content)
         proxied_response.headers['Content-Type'] = response.headers.get('Content-Type', 'application/octet-stream')
+        proxied_response.headers['Access-Control-Allow-Origin'] = '*'
         return proxied_response
     else:
         # Handle the case where there's no response (e.g., if the target URL is invalid)
