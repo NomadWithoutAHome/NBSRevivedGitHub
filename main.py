@@ -1,7 +1,7 @@
 import json
 import uuid
 import requests
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, make_response
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -93,6 +93,37 @@ def search():
         return render_template('search_results.html', query=query, results=search_results)
     else:
         return redirect(url_for('index'))
+
+@app.route('/proxy/<path:url>', methods=['GET', 'POST'])
+def proxy(url):
+    # Ensure that the provided URL has the 'https://' scheme
+    if not url.startswith('https://'):
+        url = 'https://' + url  # Add 'https://' if missing
+
+    # Initialize response
+    response = None
+
+    # Forward the request to the target URL
+    if request.method == 'GET':
+        try:
+            response = requests.get(url)
+        except requests.exceptions.RequestException as e:
+            return make_response(f"Proxy request failed: {str(e)}", 500)
+    elif request.method == 'POST':
+        try:
+            response = requests.post(url, data=request.data)
+        except requests.exceptions.RequestException as e:
+            return make_response(f"Proxy request failed: {str(e)}", 500)
+
+    if response is not None:
+        # Create a response with the same content as the target's response
+        proxied_response = make_response(response.content)
+        proxied_response.headers['Content-Type'] = response.headers.get('Content-Type', 'application/octet-stream')
+        return proxied_response
+    else:
+        # Handle the case where there's no response (e.g., if the target URL is invalid)
+        return make_response("Proxy request failed", 500)
+
 
 @app.route('/seasons')
 def seasons():
