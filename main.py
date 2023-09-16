@@ -1,10 +1,11 @@
 import json
 import uuid
 import requests
-from flask import Flask, render_template, request, redirect, url_for, make_response
-
+from flask import Flask, render_template, request, redirect, url_for, make_response, session
 
 app = Flask(__name__, static_url_path='/static')
+
+app.secret_key = 'icanseeyourdoodle'
 
 
 def load_json_data(filename):
@@ -19,6 +20,8 @@ seasons_data = load_json_data('static/Data/season_data.json')
 
 # Define a dictionary to store UUIDs associated with episodes
 episode_uuids = {}
+
+
 
 # Function to generate and store UUIDs for episodes
 def generate_episode_uuids():
@@ -58,8 +61,21 @@ def get_random_simpsons_quote():
 # Define the index page
 @app.route('/')
 def index():
+    # Get the last watched episode UUID from the session
+    last_watched_uuid = session.get('last_watched_episode')
+
+    # Initialize episode data to None
+    episode = None
+
+    # Check if there's a last watched episode UUID
+    if last_watched_uuid:
+        # Retrieve episode data based on the last watched UUID
+        episode = episode_uuids.get(last_watched_uuid)
+
+    # Get a random Simpsons quote
     quote, character, image = get_random_simpsons_quote()
-    return render_template('index.html', quote=quote, character=character, image=image)
+
+    return render_template('index.html', quote=quote, character=character, image=image, episode=episode)
 
 # Define the video page
 @app.route('/video/<uuid:video_uuid>')
@@ -67,8 +83,11 @@ def video(video_uuid):
     video_uuid_str = str(video_uuid)
     episode = episode_uuids.get(video_uuid_str)
     if episode and 'Episode_vidsrc' in episode:
+        # Store the last watched episode in the session
+        session['last_watched_episode'] = video_uuid_str
         return render_template('video.html', video_url=episode['Episode_vidsrc'])
     return "Video not found", 404
+
 
 # Define the season page
 @app.route('/season/<int:season_number>')
@@ -98,36 +117,36 @@ def search():
     else:
         return redirect(url_for('index'))
 
-@app.route('/proxy/<path:url>', methods=['GET', 'POST'])
-def proxy(url):
-    # Ensure that the provided URL has the 'https://' scheme
-    if not url.startswith('https://'):
-        url = 'https://' + url  # Add 'https://' if missing
-
-    # Initialize response
-    response = None
-
-    # Forward the request to the target URL
-    if request.method == 'GET':
-        try:
-            response = requests.get(url)
-        except requests.exceptions.RequestException as e:
-            return make_response(f"Proxy request failed: {str(e)}", 500)
-    elif request.method == 'POST':
-        try:
-            response = requests.post(url, data=request.data)
-        except requests.exceptions.RequestException as e:
-            return make_response(f"Proxy request failed: {str(e)}", 500)
-
-    if response is not None:
-        # Create a response with the same content as the target's response
-        proxied_response = make_response(response.content)
-        proxied_response.headers['Content-Type'] = response.headers.get('Content-Type', 'application/octet-stream')
-        proxied_response.headers['Access-Control-Allow-Origin'] = '*'
-        return proxied_response
-    else:
-        # Handle the case where there's no response (e.g., if the target URL is invalid)
-        return make_response("Proxy request failed", 500)
+# @app.route('/proxy/<path:url>', methods=['GET', 'POST'])
+# def proxy(url):
+#     # Ensure that the provided URL has the 'https://' scheme
+#     if not url.startswith('https://'):
+#         url = 'https://' + url  # Add 'https://' if missing
+#
+#     # Initialize response
+#     response = None
+#
+#     # Forward the request to the target URL
+#     if request.method == 'GET':
+#         try:
+#             response = requests.get(url)
+#         except requests.exceptions.RequestException as e:
+#             return make_response(f"Proxy request failed: {str(e)}", 500)
+#     elif request.method == 'POST':
+#         try:
+#             response = requests.post(url, data=request.data)
+#         except requests.exceptions.RequestException as e:
+#             return make_response(f"Proxy request failed: {str(e)}", 500)
+#
+#     if response is not None:
+#         # Create a response with the same content as the target's response
+#         proxied_response = make_response(response.content)
+#         proxied_response.headers['Content-Type'] = response.headers.get('Content-Type', 'application/octet-stream')
+#         proxied_response.headers['Access-Control-Allow-Origin'] = '*'
+#         return proxied_response
+#     else:
+#         # Handle the case where there's no response (e.g., if the target URL is invalid)
+#         return make_response("Proxy request failed", 500)
 
 
 @app.route('/seasons')
