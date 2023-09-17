@@ -2,6 +2,8 @@ import json
 import uuid
 import requests
 from flask import Flask, render_template, request, redirect, url_for, make_response, session
+import re
+from fuzzywuzzy import fuzz
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -101,21 +103,79 @@ def season(season_number):
 # Define the search route
 @app.route('/search')
 def search():
-    query = request.args.get('query')
-    if query:
-        query_lower = query.lower()
-        search_results = []
+    try:
+        query = request.args.get('query')
+        season_filter = request.args.get('season')
+        fuzzy_search = request.args.get('fuzzy')  # Check if fuzzy search is enabled
+        partial_match = request.args.get('partial_match')  # Check if partial matches are allowed
 
-        for season_name, season_episodes in episode_data.items():
-            for episode in season_episodes:
-                if query_lower in episode['Episode Title'].lower():
-                    episode_copy = episode.copy()
-                    episode_copy['Season'] = int(season_name.split()[1])
-                    search_results.append(episode_copy)
+        if not query:
+            # Redirect to the index page if no query is provided
+            return redirect(url_for('index'))
+
+        search_results = perform_search(query, season_filter, fuzzy_search, partial_match)
 
         return render_template('search_results.html', query=query, results=search_results)
-    else:
-        return redirect(url_for('index'))
+
+    except Exception as e:
+        # Handle exceptions here (e.g., log the error, display a user-friendly message)
+        return render_template('error.html', error_message=str(e))
+
+
+def perform_search(query, season_filter, fuzzy_search, partial_match):
+    search_results = []
+
+    for season_name, season_episodes in episode_data.items():
+        if (not season_filter or season_filter == season_name):
+            for episode in season_episodes:
+                episode_title = episode['Episode Title'].lower()
+
+                if not fuzzy_search:
+                    if partial_match:
+                        # Perform partial match
+                        if query.lower() in episode_title:
+                            episode_copy = episode.copy()
+                            episode_copy['Season'] = extract_season_number(season_name)
+                            search_results.append(episode_copy)
+                    else:
+                        # Perform whole word search (default behavior)
+                        if query.lower() in episode_title.split():
+                            episode_copy = episode.copy()
+                            episode_copy['Season'] = extract_season_number(season_name)
+                            search_results.append(episode_copy)
+                else:
+                    # Enable fuzzy search
+                    similarity_ratio = fuzz.ratio(query.lower(), episode_title)
+                    threshold = 70  # You can adjust this threshold as needed
+                    if similarity_ratio >= threshold:
+                        episode_copy = episode.copy()
+                        episode_copy['Season'] = extract_season_number(season_name)
+                        search_results.append(episode_copy)
+
+    return search_results
+
+
+def extract_season_number(season_name):
+    # Extract the numeric season value from the season_name
+    return int(season_name.split()[-1])
+
+
+# Example URIs:
+# - Basic search with no filters
+#   http://localhost:5000/search?query=example%20query
+#
+# - Search with a specific season filter (e.g., Season 2)
+#   http://localhost:5000/search?query=example%20query&season=Season%202
+#
+# - Search with fuzzy matching enabled
+#   http://localhost:5000/search?query=example%20query&fuzzy=true
+#
+# - Search with partial matching enabled
+#   http://localhost:5000/search?query=example%20query&partial_match=true
+#
+# - Search with both season filter, fuzzy, and partial matching enabled
+#   http://localhost:5000/search?query=example%20query&season=Season%202&fuzzy=true&partial_match=true
+
 
 # @app.route('/proxy/<path:url>', methods=['GET', 'POST'])
 # def proxy(url):

@@ -44,3 +44,9 @@ body {
 }
 
 
+/* Custom CSS to change the link text color for the "card-link" class */
+    .card-link {
+        color: #000000; /* Change to your desired color code */
+    }
+
+
