@@ -9,13 +9,18 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/custom.css">
 
-    <!-- Preload custom fonts (example) -->
-    <link rel="preload" as="font" href="path-to-your-font.woff" type="font/woff" crossorigin="anonymous">
-
     <!-- Favicon -->
     <link rel="icon" href="https://i.pinimg.com/originals/b0/9d/89/b09d8964573bee9b39a281a908a323fe.png" type="image/png">
 
-    <!-- Add other preloads here -->
+     <!-- Custom CSS for suggestions -->
+    <style>
+        .dropdown-item:hover {
+            background-color: #007bff; /* Change to the desired Simpsons blue color */
+            color: #fff; /* Change to the desired text color for hover */
+            cursor: pointer;
+        }
+    </style>
+
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light simpsons-navbar">
@@ -28,8 +33,9 @@
             <a class="nav-link text-white" href="/seasons">Seasons</a>
         </li>
         <li class="nav-item">
-            <form class="form-inline my-2 my-lg-0" action="/search" method="get">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search episodes by title" aria-label="Search" name="query">
+            <form class="form-inline my-2 my-lg-0 position-relative" action="/search" method="get">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search episodes by title" aria-label="Search" name="query" autocomplete="off">
+                <ul class="autocomplete-suggestions dropdown-menu w-100" style="display: none;"></ul> <!-- Autocomplete suggestions dropdown -->
             </form>
         </li>
         <!-- Add more navigation links here -->
@@ -40,5 +46,83 @@
 </div>
 
 <!-- Add JavaScript with the 'defer' attribute here if needed -->
+<script>
+    const searchInput = document.querySelector('input[name="query"]');
+    const suggestionsDropdown = document.querySelector('.autocomplete-suggestions');
+
+    // Fetch episode titles from the episode_data.json file in the static/Data directory
+    fetch('/static/Data/episode_data.json')
+        .then(response => response.json())
+        .then(data => {
+            // Extract episode titles from the JSON data
+            const episodeTitles = Object.values(data).flatMap(season => season.map(episode => episode['Episode Title']));
+
+            searchInput.addEventListener('input', debounce(() => {
+                const query = searchInput.value.toLowerCase();
+                const filteredSuggestions = episodeTitles.filter(title =>
+                    title.toLowerCase().includes(query)
+                ).slice(0, 5); // Limit suggestions to 5 items
+
+                renderSuggestions(filteredSuggestions);
+            }, 300));
+
+            // Handle selecting a suggestion
+            suggestionsDropdown.addEventListener('click', (event) => {
+                if (event.target.tagName === 'LI') {
+                    const selectedTitle = event.target.textContent;
+                    const episodeUrl = getEpisodeUrl(selectedTitle);
+                    if (episodeUrl) {
+                        // Redirect to the video page
+                        window.location.href = `/video/${episodeUrl}`;
+                    }
+                }
+            });
+
+            // Function to get the episode URL using Python-like logic
+            function getEpisodeUrl(episodeTitle) {
+                for (const season_name in data) {
+                    if (Object.prototype.hasOwnProperty.call(data, season_name)) {
+                        const season_episodes = data[season_name];
+                        for (const episode of season_episodes) {
+                            if (episode['Episode Title'] === episodeTitle) {
+                                return episode['Episode_vidsrc'];
+                            }
+                        }
+                    }
+                }
+                return null;
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching episode data:', error);
+        });
+
+    function renderSuggestions(suggestions) {
+        suggestionsDropdown.innerHTML = '';
+
+        suggestions.forEach(suggestion => {
+            const listItem = document.createElement('li');
+            listItem.textContent = suggestion;
+            listItem.classList.add('dropdown-item');
+            suggestionsDropdown.appendChild(listItem);
+        });
+
+        // Show/hide the suggestions dropdown based on whether there are suggestions
+        if (suggestions.length > 0) {
+            suggestionsDropdown.style.display = 'block';
+        } else {
+            suggestionsDropdown.style.display = 'none';
+        }
+    }
+
+    // Debounce function
+    function debounce(callback, delay) {
+        let timeoutId;
+        return function () {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(callback, delay);
+        };
+    }
+</script>
 </body>
 </html>

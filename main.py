@@ -185,7 +185,13 @@ def search(
         {"request": request, "query": query, "results": matched_episodes},
     )
 
-
+#function to get video url by episode title then return its uuid ex: d8cbe487-6e66-446b-a3db-8a6e1b05492c
+def get_video_url_by_title(episode_title):
+    for season_name, season_episodes in episode_data.items():
+        for episode in season_episodes:
+            if episode.get('Episode Title') == episode_title:
+                return episode.get('uuid')
+    return None
 
 
 if __name__ == "__main__":
