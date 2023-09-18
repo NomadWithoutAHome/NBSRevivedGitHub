@@ -193,6 +193,9 @@ def get_video_url_by_title(episode_title):
                 return episode.get('uuid')
     return None
 
+test = get_video_url_by_title("Simpsons Roasting on an Open Fire")
+print(test)
+
 
 if __name__ == "__main__":
     import uvicorn

@@ -14,6 +14,13 @@
 
      <!-- Custom CSS for suggestions -->
     <style>
+        .dropdown-item {
+            white-space: nowrap; /* Prevent text from wrapping */
+            overflow: hidden; /* Hide overflowing text */
+            text-overflow: ellipsis; /* Show ellipsis (...) for truncated text */
+            max-width: 100%; /* Ensure text stays within the dropdown width */
+        }
+
         .dropdown-item:hover {
             background-color: #007bff; /* Change to the desired Simpsons blue color */
             color: #fff; /* Change to the desired text color for hover */
@@ -85,6 +92,7 @@
                         const season_episodes = data[season_name];
                         for (const episode of season_episodes) {
                             if (episode['Episode Title'] === episodeTitle) {
+                                    console.log(episode['uuid']);
                                 return episode['Episode_vidsrc'];
                             }
                         }
@@ -123,6 +131,13 @@
             timeoutId = setTimeout(callback, delay);
         };
     }
+
+    // Add a click event listener to close suggestions on click outside
+    document.body.addEventListener('click', (event) => {
+        if (!searchInput.contains(event.target) && !suggestionsDropdown.contains(event.target)) {
+            suggestionsDropdown.style.display = 'none';
+        }
+    });
 </script>
 </body>
 </html>
