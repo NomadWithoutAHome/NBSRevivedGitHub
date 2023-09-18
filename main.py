@@ -1,18 +1,60 @@
 import json
-import uuid
-import requests
-from flask import Flask, render_template, request, redirect, url_for, make_response, session
 import re
+from typing import Optional
+from uuid import UUID, uuid4
+
+import requests
+from fastapi import FastAPI, Request, HTTPException, Query
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from fuzzywuzzy import fuzz
 
-app = Flask(__name__, static_url_path='/static')
 
-app.secret_key = 'icanseeyourdoodle'
-
-
+# Define the load_json_data function to load JSON data from a file
 def load_json_data(filename):
-    with open(filename, 'r') as file:
-        return json.load(file)
+    try:
+        with open(filename, 'r') as file:
+            return json.load(file)
+    except FileNotFoundError:
+        print(f"File not found: {filename}")
+        return None
+    except json.JSONDecodeError as e:
+        print(f"Error decoding JSON: {e}")
+        return None
+
+
+# Define the get_random_simpsons_quote function
+def get_random_simpsons_quote():
+    try:
+        response = requests.get('https://thesimpsonsquoteapi.glitch.me/quotes')
+        if response.status_code == 200:
+            quote_data = response.json()[0]
+            return quote_data['quote'], quote_data['character'], quote_data['image']
+        else:
+            return "Failed to fetch quote", "Unknown", None
+    except Exception as e:
+        print(f"Error fetching Simpsons quote: {e}")
+        return "Failed to fetch quote", "Unknown", None
+
+
+# Define a function to extract the numeric season value from a season name
+def extract_season_number(season_name):
+    try:
+        # Split the season name by space and get the last part, which is the season number
+        season_number = season_name.split()[-1]
+        # Convert it to an integer
+        return int(season_number)
+    except (IndexError, ValueError):
+        return None
+
+app = FastAPI()
+
+# Configure Jinja2Templates to load templates from a directory named "templates"
+templates = Jinja2Templates(directory="templates")
+
+# Serve static files from a directory named "static"
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Load episode data from the JSON file
 episode_data = load_json_data('static/Data/episode_data.json')
@@ -20,198 +62,133 @@ episode_data = load_json_data('static/Data/episode_data.json')
 # Load season data from the JSON file
 seasons_data = load_json_data('static/Data/season_data.json')
 
-# Define a dictionary to store UUIDs associated with episodes
+# Initialize a dictionary to store episode UUIDs
 episode_uuids = {}
 
 
-
-# Function to generate and store UUIDs for episodes
+# Define a function to generate and store UUIDs for episodes
 def generate_episode_uuids():
     for season_name, season_episodes in episode_data.items():
         for episode in season_episodes:
-            episode_uuid = str(uuid.uuid4())
+            episode_uuid = str(uuid4())  # Generate a new UUID for each episode
             episode_uuids[episode_uuid] = episode
             episode['uuid'] = episode_uuid
+
 
 # Initialize UUIDs when the application starts
 generate_episode_uuids()
 
-# Function to get season data by season number
+
+# Define a function to get an episode by its UUID
+def get_episode_by_uuid(uuid_str):
+    for season_name, season_episodes in episode_data.items():
+        for episode in season_episodes:
+            if episode.get('uuid') == uuid_str:
+                return episode
+    return None
+
+
+# Define a function to get season data by season number
+def get_season_by_number(season_number):
+    for season in seasons_data:
+        if season.get('Season') == season_number:
+            return season
+    return None
 
 def get_season_data(season_number):
     season_name = f"Season {season_number}"
     return episode_data.get(season_name, None)
 
-# Function to get season number by episode title
-def get_season_number(episode_title):
-    for season_name, season_episodes in episode_data.items():
-        for episode in season_episodes:
-            if episode['Episode Title'] == episode_title:
-                return int(season_name.split()[1])
-    return None
 
-# Function to fetch a random quote from The Simpsons API
 
-def get_random_simpsons_quote():
-    response = requests.get('https://thesimpsonsquoteapi.glitch.me/quotes')
-    if response.status_code == 200:
-        quote_data = response.json()[0]
-        return quote_data['quote'], quote_data['character'], quote_data['image']
-    else:
-        return "Failed to fetch quote", "Unknown"
 
-# Define the index page
-@app.route('/')
-def index():
-    # Get the last watched episode UUID from the session
-    last_watched_uuid = session.get('last_watched_episode')
-
-    # Initialize episode data to None
-    episode = None
-
-    # Check if there's a last watched episode UUID
-    if last_watched_uuid:
-        # Retrieve episode data based on the last watched UUID
-        episode = episode_uuids.get(last_watched_uuid)
-
-    # Get a random Simpsons quote
-    quote, character, image = get_random_simpsons_quote()
-
-    return render_template('index.html', quote=quote, character=character, image=image, episode=episode)
-
-# Define the video page
-@app.route('/video/<uuid:video_uuid>')
-def video(video_uuid):
+# Route handler to render the video.html template based on the provided code
+@app.get('/video/{video_uuid}', response_class=HTMLResponse)
+def video(request: Request, video_uuid: UUID):
     video_uuid_str = str(video_uuid)
     episode = episode_uuids.get(video_uuid_str)
     if episode and 'Episode_vidsrc' in episode:
-        # Store the last watched episode in the session
-        session['last_watched_episode'] = video_uuid_str
-        return render_template('video.html', video_url=episode['Episode_vidsrc'])
+        return templates.TemplateResponse('video.html', {"request": request, "video_url": episode['Episode_vidsrc']})
     return "Video not found", 404
 
 
-# Define the season page
-@app.route('/season/<int:season_number>')
-def season(season_number):
+# Route handler to get an episode by UUID
+@app.get('/episode/{uuid}', response_model=dict)
+def get_episode(uuid: UUID):
+    episode_uuid_str = str(uuid)
+    episode = get_episode_by_uuid(episode_uuid_str)
+    if episode:
+        return episode
+    raise HTTPException(status_code=404, detail="Episode not found")
+
+# Route handler for the index (home) page
+@app.get('/', response_class=HTMLResponse)
+def index(request: Request):
+    # Get a random Simpsons quote
+    quote, character, image = get_random_simpsons_quote()
+
+    # Render the index.html template with the quote data
+    return templates.TemplateResponse('index.html',
+                                      {"request": request, "quote": quote, "character": character, "image": image})
+
+# Route handler for the seasons page
+@app.get('/seasons', response_class=HTMLResponse)
+def seasons(request: Request):
+    return templates.TemplateResponse('seasons.html', {"request": request, "seasons_data": seasons_data})
+
+# Route handler for the season page
+@app.get('/season/{season_number}', response_class=HTMLResponse)
+def season(request: Request, season_number: int):
     season_data = get_season_data(season_number)
-    if season_data is not None:
-        return render_template('season.html', season_data=season_data, season_number=season_number)
-    else:
-        return "Season not found", 404
+    if season_data:
+        return templates.TemplateResponse('season.html', {"request": request, "season_data": season_data, "season_number": season_number})
+    raise HTTPException(status_code=404, detail="Season not found")
 
-# Define the search route
-@app.route('/search')
-def search():
-    try:
-        query = request.args.get('query')
-        season_filter = request.args.get('season')
-        fuzzy_search = request.args.get('fuzzy')  # Check if fuzzy search is enabled
-        partial_match = request.args.get('partial_match')  # Check if partial matches are allowed
+@app.get('/search', response_class=HTMLResponse)
+def search(
+    request: Request,
+    query: str = Query(..., title="Search Query", description="Enter the episode title to search for."),
+    season: int = Query(None, title="Season Number", description="Filter by season number."),
+    fuzzy: bool = Query(False, title="Fuzzy Search", description="Enable fuzzy searching."),
+    partial: bool = Query(False, title="Partial Match", description="Enable partial matching."),
+):
+    # Ensure the query is not empty
+    if not query:
+        return "Please enter a search query."
 
-        if not query:
-            # Redirect to the index page if no query is provided
-            return redirect(url_for('index'))
+    matched_episodes = []
 
-        search_results = perform_search(query, season_filter, fuzzy_search, partial_match)
-
-        return render_template('search_results.html', query=query, results=search_results)
-
-    except Exception as e:
-        # Handle exceptions here (e.g., log the error, display a user-friendly message)
-        return render_template('error.html', error_message=str(e))
-
-
-def perform_search(query, season_filter, fuzzy_search, partial_match):
-    search_results = []
-
-    for season_name, season_episodes in episode_data.items():
-        if (not season_filter or season_filter == season_name):
-            for episode in season_episodes:
+    for season_name, episodes in episode_data.items():
+        # Check if the season filter is provided and matches the current season_name
+        if (season is None or season == extract_season_number(season_name)):
+            for episode in episodes:
                 episode_title = episode['Episode Title'].lower()
 
-                if not fuzzy_search:
-                    if partial_match:
-                        # Perform partial match
-                        if query.lower() in episode_title:
-                            episode_copy = episode.copy()
-                            episode_copy['Season'] = extract_season_number(season_name)
-                            search_results.append(episode_copy)
-                    else:
-                        # Perform whole word search (default behavior)
-                        if query.lower() in episode_title.split():
-                            episode_copy = episode.copy()
-                            episode_copy['Season'] = extract_season_number(season_name)
-                            search_results.append(episode_copy)
+                if fuzzy:
+                    # Use fuzzywuzzy to perform fuzzy searching
+                    from fuzzywuzzy import fuzz
+                    fuzz_ratio = fuzz.ratio(query.lower(), episode_title)
+                    if fuzz_ratio >= 90:  # Adjust the threshold as needed
+                        matched_episodes.append(episode)
+                elif partial:
+                    # Perform partial matching
+                    if query.lower() in episode_title:
+                        matched_episodes.append(episode)
                 else:
-                    # Enable fuzzy search
-                    similarity_ratio = fuzz.ratio(query.lower(), episode_title)
-                    threshold = 70  # You can adjust this threshold as needed
-                    if similarity_ratio >= threshold:
-                        episode_copy = episode.copy()
-                        episode_copy['Season'] = extract_season_number(season_name)
-                        search_results.append(episode_copy)
+                    # Use regular expressions to match whole words
+                    pattern = r'\b{}\b'.format(re.escape(query.lower()))
+                    if re.search(pattern, episode_title):
+                        matched_episodes.append(episode)
 
-    return search_results
-
-
-def extract_season_number(season_name):
-    # Extract the numeric season value from the season_name
-    return int(season_name.split()[-1])
+    return templates.TemplateResponse(
+        'search_results.html',
+        {"request": request, "query": query, "results": matched_episodes},
+    )
 
 
-# Example URIs:
-# - Basic search with no filters
-#   http://localhost:5000/search?query=example%20query
-#
-# - Search with a specific season filter (e.g., Season 2)
-#   http://localhost:5000/search?query=example%20query&season=Season%202
-#
-# - Search with fuzzy matching enabled
-#   http://localhost:5000/search?query=example%20query&fuzzy=true
-#
-# - Search with partial matching enabled
-#   http://localhost:5000/search?query=example%20query&partial_match=true
-#
-# - Search with both season filter, fuzzy, and partial matching enabled
-#   http://localhost:5000/search?query=example%20query&season=Season%202&fuzzy=true&partial_match=true
 
 
-# @app.route('/proxy/<path:url>', methods=['GET', 'POST'])
-# def proxy(url):
-#     # Ensure that the provided URL has the 'https://' scheme
-#     if not url.startswith('https://'):
-#         url = 'https://' + url  # Add 'https://' if missing
-#
-#     # Initialize response
-#     response = None
-#
-#     # Forward the request to the target URL
-#     if request.method == 'GET':
-#         try:
-#             response = requests.get(url)
-#         except requests.exceptions.RequestException as e:
-#             return make_response(f"Proxy request failed: {str(e)}", 500)
-#     elif request.method == 'POST':
-#         try:
-#             response = requests.post(url, data=request.data)
-#         except requests.exceptions.RequestException as e:
-#             return make_response(f"Proxy request failed: {str(e)}", 500)
-#
-#     if response is not None:
-#         # Create a response with the same content as the target's response
-#         proxied_response = make_response(response.content)
-#         proxied_response.headers['Content-Type'] = response.headers.get('Content-Type', 'application/octet-stream')
-#         proxied_response.headers['Access-Control-Allow-Origin'] = '*'
-#         return proxied_response
-#     else:
-#         # Handle the case where there's no response (e.g., if the target URL is invalid)
-#         return make_response("Proxy request failed", 500)
+if __name__ == "__main__":
+    import uvicorn
 
-
-@app.route('/seasons')
-def seasons():
-    return render_template('seasons.html', seasons_data=seasons_data)
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    uvicorn.run(app, host="0.0.0.0", port=8000)

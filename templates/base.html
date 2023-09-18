@@ -7,7 +7,7 @@
 
     <!-- Combined CSS files -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
+    <link rel="stylesheet" href="/static/custom.css">
 
     <!-- Preload custom fonts (example) -->
     <link rel="preload" as="font" href="path-to-your-font.woff" type="font/woff" crossorigin="anonymous">
@@ -28,7 +28,7 @@
             <a class="nav-link text-white" href="/seasons">Seasons</a>
         </li>
         <li class="nav-item">
-            <form class="form-inline my-2 my-lg-0" action="{{ url_for('search') }}" method="get">
+            <form class="form-inline my-2 my-lg-0" action="/search" method="get">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search episodes by title" aria-label="Search" name="query">
             </form>
         </li>
