@@ -1,6 +1,6 @@
 import json
 import re
-from typing import Optional
+from typing import Optional, Dict, Union
 from uuid import UUID, uuid4
 
 import requests
@@ -279,6 +279,22 @@ def search(
         {"request": request, "query": query, "results": matched_episodes},
     )
 
+#route that returns the video url for a given episode title and return json
+@app.get('/video_url/{episode_title}', response_model=Dict[str, Union[str, int]])
+def video_url(episode_title: str):
+    """
+    Return the video URL based on the provided episode title.
+
+    Args:
+        episode_title (str): The title of the episode.
+
+    Returns:
+        dict: A dictionary containing the video URL or an error message.
+    """
+    episode_uuid = get_video_url_by_title(episode_title)
+    if episode_uuid:
+        return {"uuid": episode_uuid}
+    raise HTTPException(status_code=404, detail="Video not found")
 
 def get_video_url_by_title(episode_title):
     """
@@ -297,8 +313,8 @@ def get_video_url_by_title(episode_title):
     return None
 
 
-test = get_video_url_by_title("Simpsons Roasting on an Open Fire")
-print(test)
+#test = get_video_url_by_title("Simpsons Roasting on an Open Fire")
+#print(test)
 
 if __name__ == "__main__":
     import uvicorn
