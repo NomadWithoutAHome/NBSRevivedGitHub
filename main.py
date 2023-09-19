@@ -1,15 +1,22 @@
 import json
 import re
-from typing import Optional, Dict, Union
+from typing import Dict, Union, List
 from uuid import UUID, uuid4
 
 import requests
-from fastapi import FastAPI, Request, HTTPException, Query
+from fastapi import FastAPI, Request, HTTPException, Query, Cookie
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fuzzywuzzy import fuzz
 
+from deta import Deta
+from pydantic import BaseModel
+
+# Initialize Deta
+deta = Deta("b0zC9ym1tt1d_cE68J9dW9L6xwaf9GQRgxoHjW4kF3iBX")
+# Initialize Deta Base
+db = deta.Base("comments")
 
 def load_json_data(filename):
     """
@@ -30,6 +37,7 @@ def load_json_data(filename):
     except json.JSONDecodeError as e:
         print(f"Error decoding JSON: {e}")
         return None
+
 
 
 def get_random_simpsons_quote():
@@ -79,6 +87,21 @@ episode_data = load_json_data('static/Data/episode_data.json')
 seasons_data = load_json_data('static/Data/season_data.json')
 
 episode_uuids = {}
+
+class Comment(BaseModel):
+    episode_uuid: str
+    username: str
+    comment: str
+
+@app.post('/comment', response_model=Comment)
+def create_comment(comment: Comment):
+    new_comment = db.put(comment.dict())
+    return new_comment
+
+@app.get('/comments/{episode_uuid}', response_model=List[Comment])
+def get_comments(episode_uuid: str):
+    comments = db.fetch({"episode_uuid": episode_uuid})
+    return list(comments)
 
 
 def generate_episode_uuids():
@@ -142,13 +165,16 @@ def get_season_data(season_number):
     return episode_data.get(season_name, None)
 
 
+from fastapi import Response
+
 @app.get('/video/{video_uuid}', response_class=HTMLResponse)
-def video(request: Request, video_uuid: UUID):
+def video(request: Request, response: Response, video_uuid: UUID):
     """
-    Render the video.html template based on the provided UUID.
+    Render the video.html template based on the provided UUID and set the last-watched episode cookie.
 
     Args:
         request (Request): The FastAPI request object.
+        response (Response): The FastAPI response object.
         video_uuid (UUID): The UUID of the video.
 
     Returns:
@@ -157,8 +183,11 @@ def video(request: Request, video_uuid: UUID):
     video_uuid_str = str(video_uuid)
     episode = episode_uuids.get(video_uuid_str)
     if episode and 'Episode_vidsrc' in episode:
+        # Set the "last_watched_episode" cookie with the UUID of the current episode.
+        response.set_cookie(key="last_watched_episode", value=video_uuid_str)
         return templates.TemplateResponse('video.html', {"request": request, "video_url": episode['Episode_vidsrc']})
     return "Video not found", 404
+
 
 
 @app.get('/episode/{uuid}', response_model=dict)
@@ -183,19 +212,29 @@ def get_episode(uuid: UUID):
 
 
 @app.get('/', response_class=HTMLResponse)
-def index(request: Request):
+def index(request: Request, last_watched_episode: str = Cookie(default=None)):
     """
-    Render the index.html template with a random Simpsons quote.
+    Render the index.html template with a random Simpsons quote and last watched episode.
 
     Args:
         request (Request): The FastAPI request object.
+        last_watched_episode (str, optional): The last watched episode stored in a cookie.
 
     Returns:
         HTMLResponse: The rendered HTML template.
     """
+    # Retrieve the last watched episode data based on the stored cookie value (e.g., episode UUID).
+    last_watched_episode_data = get_episode_by_uuid(last_watched_episode)
+
+    # Get a random Simpsons quote.
     quote, character, image = get_random_simpsons_quote()
+
     return templates.TemplateResponse('index.html',
-                                      {"request": request, "quote": quote, "character": character, "image": image})
+                                      {"request": request,
+                                       "quote": quote,
+                                       "character": character,
+                                       "image": image,
+                                       "last_watched_episode": last_watched_episode_data})
 
 
 @app.get('/seasons', response_class=HTMLResponse)

@@ -8,4 +8,19 @@
         <footer class="blockquote-footer">{{ character }}</footer>
     </blockquote>
 </div>
+
+{% if last_watched_episode %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <img src="{{ last_watched_episode['Thumbnail'] }}" class="card-img-top img-fluid" alt="{{ last_watched_episode['Episode Title'] }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ last_watched_episode['Episode Title'] }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
