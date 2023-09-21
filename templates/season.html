@@ -15,12 +15,17 @@
                             <h5 class="card-title font-weight-bold" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><a href="{{ url_for('video', video_uuid=episode.get('uuid', '')) }}" class="card-link">{{ episode['Episode Title'] }}</a></h5>
                             <p class="card-text small">Rating: {{ episode.get('Rating', '') }} - Air Date: {{ episode.get('Air Date', '') }}
                                 - Runtime: {{ episode.get('Runtime', '') }} - Episode: {{ season_number }}x{{ episode['Episode Number'] }}</p>
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModal{{ episode['Episode Number'] }}">
-                              View Details
-                            </button>
-                            <!-- Watch button -->
-                            <a href="{{ url_for('video', video_uuid=episode.get('uuid', '')) }}" class="btn btn-success">Watch</a>
+                            <!-- Button group for View Details and Watch buttons -->
+                            <div class="d-flex justify-content-end">
+                                <div class="btn-group" role="group">
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal{{ episode['Episode Number'] }}">
+                                        View Details
+                                    </button>
+                                    <!-- Watch button -->
+                                    <a href="{{ url_for('video', video_uuid=episode.get('uuid', '')) }}" class="btn btn-info ml-2">Watch</a>
+                                </div>
+                            </div>
 
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal{{ episode['Episode Number'] }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -36,7 +41,7 @@
                                     {{ episode.get('Episode Description', '')|safe }}
                                   </div>
                                   <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
                                   </div>
                                 </div>
                               </div>

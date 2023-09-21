@@ -48,3 +48,11 @@ body {
     .card-link {
         color: #000000; /* Change to your desired color code */
     }
+
+
+/* Custom CSS for the button color */
+.marge-blue-button {
+    background-color: #4872D3;
+    color: white;
+    /* You can add additional styling here if needed */
+}
