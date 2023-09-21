@@ -1,19 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container video-container"> <!-- Add the "video-container" class here -->
+<div class="container video-container">
     <div class="row">
-        <!-- Video iframe on the left side (col-lg-8) -->
-        <div class="col-lg-8">
+        <!-- Video iframe and Chat application on the same row -->
+        <div class="col-lg-9 col-md-12">
             <div class="embed-responsive embed-responsive-16by9">
                 <iframe src="{{ video_url }}" class="embed-responsive-item" allowfullscreen frameborder="0" allow="fullscreen"></iframe>
             </div>
         </div>
 
-        <!-- Chat application on the right side (col-lg-4) -->
-        <div class="col-lg-4">
+        <div class="col-lg-3 col-md-12">
             <div class="chat-container" style="height: 100%;">
-                <iframe src="https://kiwiirc.hybridirc.com/?nick=SimpsonsFan??&theme=Dark&#NoBullShitSimpsons" style="border:0; width:100%; height:100%;"></iframe>
+                <iframe src="https://kiwiirc.hybridirc.com/?nick=SimpsonsFan??&theme=Dark&#NoBullShitSimpsons" style="border: 0; width: 100%; height: 100%;"></iframe>
             </div>
         </div>
     </div>
