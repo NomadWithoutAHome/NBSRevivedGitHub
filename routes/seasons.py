@@ -4,8 +4,8 @@ from main import get_seasons_data, templates  # Assuming get_seasons_data is def
 
 def init_app(app: FastAPI):  # Define init_app function
     @app.get('/seasons', response_class=HTMLResponse)
-    def seasons(request: Request, seasons_data: dict = Depends(get_seasons_data)):  # Add this line
-        print(seasons_data)
+    def seasons(request: Request,  seasons_data: dict = Depends(get_seasons_data)):  # Add this line
+
         """
         Render the seasons.html template with season data.
 

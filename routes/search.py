@@ -55,5 +55,5 @@ def init_app(app: FastAPI):  # Define init_app function
 
         return templates.TemplateResponse(
             'search_results.html',
-            {"request": request, "query": query, "results": matched_episodes},
+            {"request": request, "query": query, "results": matched_episodes, "season": season},
         )

@@ -12,9 +12,9 @@
                     </div>
                     <div class="card-details">
                         <div class="card-body">
-                            <h5 class="card-title font-weight-bold" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><a href="{{ url_for('video', video_uuid=episode.get('uuid', '')) }}" class="card-link">{{ episode['Episode Title'] }}</a></h5>
-                            <p class="card-text small">Rating: {{ episode.get('Rating', '') }} - Air Date: {{ episode.get('Air Date', '') }}
-                                - Runtime: {{ episode.get('Runtime', '') }} - Episode: {{ season_number }}x{{ episode['Episode Number'] }}</p>
+                            <h5 class="card-title font-weight-bold" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ episode['Episode Title'] }}</a></h5>
+                            <p class="card-text"><small class="text-muted">Rating: {{ episode.get('Rating', '') }} - Air Date: {{ episode.get('Air Date', '') }}
+                                - Runtime: {{ episode.get('Runtime', '') }} - Episode: {{ season_number }}x{{ episode['Episode Number'] }}</small></p>
                             <!-- Button group for View Details and Watch buttons -->
                             <div class="d-flex justify-content-end">
                                 <div class="btn-group" role="group">

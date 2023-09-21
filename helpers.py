@@ -85,3 +85,11 @@ def get_random_simpsons_quote():
     except Exception as e:
         print(f"Error fetching Simpsons quote: {e}")
         return "Failed to fetch quote", "Unknown", None
+
+#get season number by episode uuid
+def get_season_number_by_uuid(uuid_str, episode_data):
+    for season_name, season_episodes in episode_data.items():
+        for episode in season_episodes:
+            if episode.get('uuid') == uuid_str:
+                return extract_season_number(season_name)
+    return None

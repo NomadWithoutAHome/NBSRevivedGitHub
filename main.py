@@ -3,7 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from helpers import load_json_data, generate_episode_uuids
 
-app = FastAPI()
+app = FastAPI(docs_url=None, redoc_url=None)
 
 # Mount a static directory for serving CSS, JS, and other static files.
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -13,10 +13,10 @@ templates = Jinja2Templates(directory="templates")
 episode_uuids = {}
 
 def get_episode_data():
-    return load_json_data('static/Data/episode_data.json')
+    return load_json_data('static/data/episode_data.json')
 
 def get_seasons_data():
-    return load_json_data('static/Data/season_data.json')
+    return load_json_data('static/data/season_data.json')
 
 def get_episode_uuids():
     return episode_uuids
