@@ -5,16 +5,43 @@
     <div class="row">
         {% for episode in season_data %}
         <div class="col-md-6 mb-4">
-            <div class="card shadow"> <!-- Add 'shadow' class here -->
-                <img src="{{ episode['Thumbnail'] }}" class="card-img-top" alt="Episode Thumbnail">
-                <div class="card-body" style="height: 100%;">
-                    <h5 class="card-title">{{ episode['Episode Title'] }}</h5>
-                    <p class="card-text">
-                        <small class="text-muted">Rating: {{ episode.get('Rating', '') }} - Air Date: {{ episode.get('Air Date', '') }}
-                            - Runtime: {{ episode.get('Runtime', '') }} - Episode: {{ season_number }}x{{ episode['Episode Number'] }}</small>
-                    </p>
-                    <p class="card-text">{{ episode.get('Episode Description', '')|safe }}</p>
-                    <a href="{{ url_for('video', video_uuid=episode.get('uuid', '')) }}" class="btn btn-primary btn-block">Watch</a>
+            <div class="card shadow" style="height: 127px; margin-bottom: 20px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="{{ episode['Thumbnail'] }}" class="card-img rounded-left img-fluid" alt="Episode {{ episode['Episode Number'] }} Image" style="width: 227px; height: 127px; object-fit: cover;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <!-- Apply the Homer Simpson Revised font to the episode title -->
+                            <h5 class="card-title font-weight-bold homer-font" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><a href="{{ url_for('video', video_uuid=episode.get('uuid', '')) }}" class="card-link">{{ episode['Episode Title'] }}</a></h5>
+                            <p class="card-text small">Rating: {{ episode.get('Rating', '') }} - Air Date: {{ episode.get('Air Date', '') }}
+                                - Runtime: {{ episode.get('Runtime', '') }} - Episode: {{ season_number }}x{{ episode['Episode Number'] }}</p>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{ episode['Episode Number'] }}">
+                              View Details
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal{{ episode['Episode Number'] }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{ episode['Episode Title'] }}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">×</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    {{ episode.get('Episode Description', '')|safe }}
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

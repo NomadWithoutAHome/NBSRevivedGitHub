@@ -2,11 +2,11 @@ from fastapi import FastAPI, Request, Response, HTTPException, Cookie, Depends  
 from fastapi.responses import HTMLResponse
 from uuid import UUID
 from helpers import get_episode_by_uuid  # Import get_episode_by_uuid
-from main import get_episode_uuids, templates  # Import get_episode_data and templates from main.py
+from main import get_episode_data, templates  # Import get_episode_data and templates from main.py
 
 def init_app(app: FastAPI):  # Define init_app function
     @app.get('/video/{video_uuid}', response_class=HTMLResponse)
-    def video(request: Request, response: Response, video_uuid: UUID, episode_data: dict = Depends(get_episode_uuids)):  # Add this line
+    def video(request: Request, response: Response, video_uuid: UUID, episode_data: dict = Depends(get_episode_data)):  # Add this line
         """
         Render the video.html template based on the provided UUID and set the last-watched episode cookie.
 
@@ -20,6 +20,7 @@ def init_app(app: FastAPI):  # Define init_app function
             HTMLResponse or str: The rendered HTML template or an error message.
         """
         video_uuid_str = str(video_uuid)
+        print(video_uuid_str)
         episode = get_episode_by_uuid(video_uuid_str, episode_data)  # Use get_episode_by_uuid
         if episode and 'Episode_vidsrc' in episode:
             # Set the "last_watched_episode" cookie with the UUID of the current episode.
