@@ -16,7 +16,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-
     <!-- Custom CSS for suggestions -->
     <style>
         .dropdown-item {
@@ -35,24 +34,35 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light simpsons-navbar">
-    <a class="navbar-brand text-white" href="/">No Bullsh!t Simpsons</a>
-    <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-            <a class="nav-link text-white" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-white" href="/seasons">Seasons</a>
-        </li>
-        <li class="nav-item">
-            <form class="form-inline my-2 my-lg-0 position-relative" action="/search" method="get">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search episodes by title"
-                       aria-label="Search" name="query" autocomplete="off">
-                <ul class="autocomplete-suggestions dropdown-menu w-100" style="display: none;"></ul>
-                <!-- Autocomplete suggestions dropdown -->
-            </form>
-        </li>
-        <!-- Add more navigation links here -->
-    </ul>
+    <a class="navbar-brand text-white" href="/">
+        <img src="https://i.pinimg.com/originals/b0/9d/89/b09d8964573bee9b39a281a908a323fe.png" width="40" height="40" class="d-inline-block align-top mr-0" alt="">
+        <img src="https://cdn.discordapp.com/attachments/1143351241930444833/1154231375751295026/SimpLogo.png" width="200" height="30" alt="">
+    </a>
+
+    <!-- Add a button for the mobile menu -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/seasons">Seasons</a>
+            </li>
+            <li class="nav-item">
+                <form class="form-inline my-2 my-lg-0 position-relative" action="/search" method="get">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search episodes by title"
+                           aria-label="Search" name="query" autocomplete="off">
+                    <ul class="autocomplete-suggestions dropdown-menu w-100" style="display: none;"></ul>
+                    <!-- Autocomplete suggestions dropdown -->
+                </form>
+            </li>
+            <!-- Add more navigation links here -->
+        </ul>
+    </div>
 </nav>
 <div class="container mt-4">
     {% block content %}{% endblock %}

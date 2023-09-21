@@ -20,7 +20,6 @@ def init_app(app: FastAPI):  # Define init_app function
             HTMLResponse or str: The rendered HTML template or an error message.
         """
         video_uuid_str = str(video_uuid)
-        print(video_uuid_str)
         episode = get_episode_by_uuid(video_uuid_str, episode_data)  # Use get_episode_by_uuid
         if episode and 'Episode_vidsrc' in episode:
             # Set the "last_watched_episode" cookie with the UUID of the current episode.

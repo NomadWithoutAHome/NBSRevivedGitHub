@@ -12,14 +12,15 @@
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <!-- Apply the Homer Simpson Revised font to the episode title -->
-                            <h5 class="card-title font-weight-bold homer-font" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><a href="{{ url_for('video', video_uuid=episode.get('uuid', '')) }}" class="card-link">{{ episode['Episode Title'] }}</a></h5>
+                            <h5 class="card-title font-weight-bold" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><a href="{{ url_for('video', video_uuid=episode.get('uuid', '')) }}" class="card-link">{{ episode['Episode Title'] }}</a></h5>
                             <p class="card-text small">Rating: {{ episode.get('Rating', '') }} - Air Date: {{ episode.get('Air Date', '') }}
                                 - Runtime: {{ episode.get('Runtime', '') }} - Episode: {{ season_number }}x{{ episode['Episode Number'] }}</p>
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{ episode['Episode Number'] }}">
+                            <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModal{{ episode['Episode Number'] }}">
                               View Details
                             </button>
+                            <!-- Watch button -->
+                            <a href="{{ url_for('video', video_uuid=episode.get('uuid', '')) }}" class="btn btn-success">Watch</a>
 
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal{{ episode['Episode Number'] }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
