@@ -21,7 +21,7 @@ def get_seasons_data():
 def get_episode_uuids():
     return episode_uuids
 
-generate_episode_uuids(get_episode_data(), episode_uuids)
+#generate_episode_uuids(get_episode_data(), episode_uuids)
 
 # Import your route files and initialize them.
 import routes.index
