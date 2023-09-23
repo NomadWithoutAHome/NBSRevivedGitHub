@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4 games-page">
+    <div class="row">
+        {% for game_name, game_info in games_data.items() %}
+            {% set game_id = game_name|replace(" ", "_") %}
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ game_info.thumbnail }}" class="card-img" alt="{{ game_name }}">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-details" data-toggle="modal" data-target="#{{ game_id }}DetailsModal">Details</button>
+                        <a href="{{ game_info.rom_file_location }}" class="btn btn-play" role="button">Play</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal for game details -->
+            <div class="modal fade" id="{{ game_id }}DetailsModal" tabindex="-1" role="dialog" aria-labelledby="{{ game_id }}DetailsModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="{{ game_id }}DetailsModalLabel">Game Details: {{ game_name }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Year: {{ game_info.year }}</p>
+                            <p>System: {{ game_info.system }}</p>
+                            <!-- Add more game details here -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

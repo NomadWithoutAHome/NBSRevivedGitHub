@@ -56,3 +56,69 @@ body {
     color: white;
     /* You can add additional styling here if needed */
 }
+
+/* Apply styles to cards within the .games-page */
+.games-page .card {
+    margin-bottom: 20px;
+    position: relative;
+    transition: box-shadow 0.3s ease-in-out, border-color 0.2s ease-in-out, opacity 0.2s ease-in-out; /* Combine transitions for box-shadow, border-color, and opacity */
+}
+
+/* Apply styles to cards within the .games-page when hovered */
+.games-page .card:hover {
+    box-shadow: 0 0 10px #4169E1; /* Add a blue glow around the card border when hovered */
+    border: 2px solid #007BFF; /* Blue border around the card on hover */
+}
+
+/* Apply styles to the pseudo-element ::after within the .games-page */
+.games-page .card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.2s ease-in-out; /* Add a smooth transition */
+    z-index: 1; /* Ensure the background is below the buttons */
+}
+
+/* Apply styles to the pseudo-element ::after within the .games-page when card is hovered */
+.games-page .card:hover::after {
+    opacity: 1; /* Show the semi-transparent background on hover */
+}
+
+/* Apply styles to the .card-body within the .games-page */
+.games-page .card .card-body {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+    opacity: 0; /* Hide the buttons initially */
+    transition: opacity 0.2s ease-in-out; /* Add a smooth transition */
+    z-index: 2; /* Ensure the buttons are above the background */
+}
+
+/* Apply styles to the .card-body within the .games-page when card is hovered */
+.games-page .card:hover .card-body {
+    opacity: 1; /* Show the buttons on hover */
+}
+
+/* Apply styles to the .btn-details within the .games-page */
+.games-page .btn-details {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+/* Apply styles to the .btn-play within the .games-page */
+.games-page .btn-play {
+    background-color: #28A745;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+}

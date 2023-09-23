@@ -1,10 +1,11 @@
+import re
+
 from fastapi import FastAPI, Request, Query, Depends
 from fastapi.responses import HTMLResponse
-import re
 from fuzzywuzzy import fuzz  # Assuming you have installed the fuzzywuzzy library
-from main import get_episode_data, templates  # Assuming get_episode_data is defined in main.py
-from helpers import extract_season_number
 
+from helpers import extract_season_number
+from main import get_episode_data, templates  # Assuming get_episode_data is defined in main.py
 
 
 def init_app(app: FastAPI):  # Define init_app function

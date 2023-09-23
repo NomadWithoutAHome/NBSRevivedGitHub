@@ -1,8 +1,11 @@
-from fastapi import FastAPI, Request, Response, HTTPException, Cookie, Depends  # Import Depends
-from fastapi.responses import HTMLResponse
 from uuid import UUID
+
+from fastapi import FastAPI, Request, Response, HTTPException, Depends  # Import Depends
+from fastapi.responses import HTMLResponse
+
 from helpers import get_episode_by_uuid  # Import get_episode_by_uuid
 from main import get_episode_data, templates  # Import get_episode_data and templates from main.py
+
 
 def init_app(app: FastAPI):  # Define init_app function
     @app.get('/video/{video_uuid}', response_class=HTMLResponse)

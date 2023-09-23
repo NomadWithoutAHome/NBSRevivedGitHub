@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.responses import HTMLResponse
+
 from helpers import get_season_data
 from main import get_episode_data, templates
 

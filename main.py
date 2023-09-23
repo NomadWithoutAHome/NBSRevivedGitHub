@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from helpers import load_json_data, generate_episode_uuids
+
+from helpers import load_json_data
 
 app = FastAPI(docs_url=None, redoc_url=None)
 
-# Mount a static directory for serving CSS, JS, and other static files.
+
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates = Jinja2Templates(directory="templates")
@@ -23,13 +24,14 @@ def get_episode_uuids():
 
 #generate_episode_uuids(get_episode_data(), episode_uuids)
 
-# Import your route files and initialize them.
 import routes.index
 import routes.seasons
 import routes.season
 import routes.search
 import routes.video_url
 import routes.video
+import routes.extra
+import routes.about
 
 routes.index.init_app(app)
 routes.seasons.init_app(app)
@@ -37,6 +39,8 @@ routes.season.init_app(app)
 routes.search.init_app(app)
 routes.video_url.init_app(app)
 routes.video.init_app(app)
+routes.extra.init_app(app)
+routes.about.init_app(app)
 
 
 if __name__ == "__main__":

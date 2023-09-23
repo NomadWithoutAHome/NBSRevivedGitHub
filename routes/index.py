@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request, Cookie, Depends
 from fastapi.responses import HTMLResponse
+
 from helpers import get_episode_by_uuid, get_random_simpsons_quote
 from main import get_episode_data, templates
 

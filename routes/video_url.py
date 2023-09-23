@@ -1,9 +1,12 @@
-from fastapi import HTTPException, FastAPI, Depends
 from typing import Dict, Union
+
+from fastapi import HTTPException, FastAPI, Depends
+
 from helpers import get_video_url_by_title
 from main import get_episode_data
 
-def init_app(app: FastAPI):  # Add this line
+
+def init_app(app: FastAPI):
     @app.get('/video_url/{episode_title}', response_model=Dict[str, Union[str, int]])
     def video_url(episode_title: str, episode_data: dict = Depends(get_episode_data)):
         """

@@ -1,6 +1,8 @@
 from fastapi import FastAPI, Request, Depends
 from fastapi.responses import HTMLResponse
+
 from main import get_seasons_data, templates  # Assuming get_seasons_data is defined in main.py
+
 
 def init_app(app: FastAPI):  # Define init_app function
     @app.get('/seasons', response_class=HTMLResponse)

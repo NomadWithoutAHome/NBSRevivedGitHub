@@ -1,0 +1,106 @@
+{
+    "Bart vs. the Space Mutants": {
+        "year": "1991",
+        "system": "Nintendo Entertainment System",
+        "description": "A single-player game where Bart Simpson, who can see aliens in disguise, must stop them from building a weapon to take over the world.",
+        "thumbnail": "static/images/game_thumbnails/bartvsspacemutants.jpg",
+        "rom_file_location": "/static/roms/nes/Simpsons, The - Bart vs. the Space Mutants (USA) (Rev 1).nes",
+        "emucode": "nes"
+    },
+    "Bart vs. the World": {
+        "year": "1991",
+        "system": "Nintendo Entertainment System",
+        "description": "Bart travels around the world on a scavenger hunt, facing against Mr. Burns' family and agents.",
+        "thumbnail": "static/images/game_thumbnails/bartvsworld.jpg",
+        "rom_file_location": "/static/roms/nes/Simpsons, The - Bart vs. the World (USA).nes",
+        "emucode": "nes"
+    },
+    "Bartman Meets Radioactive Man": {
+        "year": "1992",
+        "system": "Nintendo Entertainment System",
+        "description": "Bart Simpson transforms into Bartman and ventures into the comic book universe to rescue his kidnapped idol, Radioactive Man.",
+        "thumbnail": "static/images/game_thumbnails/bartvsradioactive.jpg",
+        "rom_file_location": "/static/roms/nes/Simpsons, The - Bartman Meets Radioactive Man (USA).nes",
+        "emucode": "nes"
+    },
+    "Krusty's Fun House": {
+        "year": "1992",
+        "system": "Game Boy",
+        "description": "A puzzle game where the player, controlling Krusty the Clown, directs rats to an extermination area through a maze-like fun house.",
+        "thumbnail": "static/images/game_thumbnails/krustyfunhouse.jpg",
+        "rom_file_location": "/static/roms/gb/Krusty's Fun House (USA, Europe).gb",
+        "emucode": "gb"
+    },
+    "Bart & the Beanstalk": {
+        "year": "1994",
+        "system": "Game Boy",
+        "description": "Bart Simpson merges with the fairy tale of Jack and the Beanstalk, climbing a beanstalk and adventuring in a giant castle.",
+        "thumbnail": "static/images/game_thumbnails/bartnbeanstalk.jpg",
+        "rom_file_location": "/static/roms/gb/Simpsons, The - Bart & the Beanstalk (USA, Europe).gb",
+        "emucode": "gb"
+    },
+    "Bart vs. the Juggernauts": {
+        "year": "1992",
+        "system": "Game Boy",
+        "description": "Bart Simpson becomes a contestant on a show called Juggernauts USA, where he takes on the Juggernauts for a chance to win big.",
+        "thumbnail": "static/images/game_thumbnails/bartvsjagg.jpg",
+        "rom_file_location": "/static/roms/gb/Simpsons, The - Bart vs. the Juggernauts (USA, Europe).gb",
+        "emucode": "gb"
+    },
+    "Itchy & Scratchy Miniature Golf Madness": {
+        "year": "1994",
+        "system": "Game Boy",
+        "description": "Scratchy plays through a miniature golf course of nine holes while avoiding attacks from Itchy in this side-scrolling action platform game.",
+        "thumbnail": "static/images/game_thumbnails/itchscratchy.jpg",
+        "rom_file_location": "/static/roms/gb/Simpsons, The - Itchy & Scratchy - Miniature Golf Madness (USA, Europe).gb",
+        "emucode": "gb"
+    },
+    "Night of the Living Treehouse of Horror": {
+        "year": "2001",
+        "system": "Game Boy Color",
+        "description": "Based on the Treehouse of Horror episodes, the game features seven levels where the player controls the Simpson family members.",
+        "thumbnail": "static/images/game_thumbnails/livingtreehouse.jpg",
+        "rom_file_location": "/static/roms/gbc/Simpsons, The - Night of the Living Treehouse of Horror (USA, Europe).gbc",
+        "emucode": "gbc"
+    },
+    "The Simpsons: Road Rage": {
+        "year": "2003",
+        "system": "Game Boy Advance",
+        "description": "Mr. Burns buys all transit systems in Springfield and creates radioactive buses. Citizens must use their cars for safer public transport.",
+        "thumbnail": "static/images/game_thumbnails/roadrade.jpg",
+        "rom_file_location": "/static/roms/gba/Simpsons, The - Road Rage (USA, Europe).gba",
+        "emucode": "gba"
+    },
+    "The Simpsons Game": {
+        "year": "2007",
+        "system": "Nintendo DS",
+        "description": "The Simpsons Game is a platform game based on the animated television series. The game features an original storyline written by Simpsons writers.",
+        "thumbnail": "static/images/game_thumbnails/simpsongame.jpg",
+        "rom_file_location": "/static/roms/nds/Simpsons Game, The (USA).nds",
+        "emucode": "nds"
+    },
+    "Krusty's Super Fun House": {
+        "year": "1992",
+        "system": "Super Nintendo",
+        "description": "Krusty the Clown has to exterminate rats in his fun house. The player controls Krusty through a series of side-scrolling levels.",
+        "thumbnail": "static/images/game_thumbnails/superfunhousekrusty.jpg",
+        "rom_file_location": "/static/roms/snes/Krusty's Super Fun House (USA) (Rev 1).sfc",
+        "emucode": "snes"
+    },
+    "Bart's Nightmare": {
+        "year": "1992",
+        "system": "Super Nintendo",
+        "description": "Bart Simpson has to find his lost homework pages while navigating a series of strange dreams.",
+        "thumbnail": "static/images/game_thumbnails/bartsnightmare.jpg",
+        "rom_file_location": "/static/roms/snes/Simpsons, The - Bart's Nightmare (USA).sfc",
+        "emucode": "snes"
+    },
+    "Virtual Bart": {
+        "year": "1994",
+        "system": "Super Nintendo",
+        "description": "Bart Simpson has to navigate a series of virtual reality scenarios. Each scenario is a different game genre.",
+        "thumbnail": "static/images/game_thumbnails/virtualbart.jpg",
+        "rom_file_location": "/static/roms/snes/Virtual Bart (USA).sfc",
+        "emucode": "snes"
+    }
+}
