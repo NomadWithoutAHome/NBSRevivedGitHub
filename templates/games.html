@@ -9,14 +9,14 @@
                 <div class="card" style="width: 18rem;">
                     <img src="{{ game_info.thumbnail }}" class="card-img" alt="{{ game_name }}">
                     <div class="card-body">
-                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#{{ game_id }}DetailsModal">Details</button>
-                        <!-- Replace the "Play" button with a form -->
+                        <!-- Move the "Play" button above the "Details" button -->
                         <form method="post" action="/emulator">
                             <input type="hidden" name="game" value="{{ game_name }}">
                             <input type="hidden" name="emucode" value="{{ game_info.emucode }}">
                             <input type="hidden" name="rom" value="{{ game_info.rom_file_location }}">
-                            <button type="submit" class="btn btn-info">Play</button>
+                            <button type="submit" class="btn btn-info mb-2">Play</button>
                         </form>
+                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#{{ game_id }}DetailsModal">Details</button>
                     </div>
                 </div>
             </div>

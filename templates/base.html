@@ -51,10 +51,19 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white" href="/seasons">Seasons</a>
-            </li>
-                <li class="nav-item">
-                <a class="nav-link text-white" href="/extra">Extras</a>
-            </li>
+           <li class="nav-item dropdown"> <!-- Make "Extras" a dropdown -->
+    <a class="nav-link text-white extras-dropdown-toggle" href="#" id="extrasDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Extras
+    </a>
+    <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton" id="extrasDropdownMenu">
+        <!-- Add links to the dropdown menu -->
+        <a class="dropdown-item" href="/games">Games</a>
+        <a class="dropdown-item" href="#">Comics</a>
+        <a class="dropdown-item" href="#">Music</a>
+        <!-- Add more links here if needed -->
+    </div>
+</li>
+
             <li class="nav-item">
                 <a class="nav-link text-white" href="/about">About</a>
             </li>
@@ -74,7 +83,7 @@
     {% block content %}{% endblock %}
 </div>
 
-<!-- Add JavaScript with the 'defer' attribute here if needed -->
+
 <script>
   const searchInput = document.querySelector('input[name="query"]');
   const suggestionsDropdown = document.querySelector('.autocomplete-suggestions');

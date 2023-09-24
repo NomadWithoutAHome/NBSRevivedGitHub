@@ -122,3 +122,10 @@ body {
     padding: 10px 20px;
     cursor: pointer;
 }
+
+
+/* Custom CSS to remove the arrow icon */
+.extras-dropdown-toggle::after {
+    display: none !important;
+}
+
