@@ -32,6 +32,8 @@ import routes.video_url
 import routes.video
 import routes.extra
 import routes.about
+import routes.games
+import routes.emulator
 
 routes.index.init_app(app)
 routes.seasons.init_app(app)
@@ -41,6 +43,8 @@ routes.video_url.init_app(app)
 routes.video.init_app(app)
 routes.extra.init_app(app)
 routes.about.init_app(app)
+routes.games.init_app(app)
+routes.emulator.init_app(app)
 
 
 if __name__ == "__main__":
