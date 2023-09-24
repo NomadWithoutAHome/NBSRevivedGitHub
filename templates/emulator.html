@@ -1,6 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-#fun shit goes here
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
+            <div style="width:640px;height:480px;max-width:100%">
+                <div id="game"></div>
+            </div>
+            <script>
+                EJS_player = "#game";
+                EJS_core = "gb";
+                EJS_gameName = "bart";
+                EJS_color = "#0064ff";
+                EJS_pathtodata = "https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@latest/data/";
+                EJS_gameUrl = "static/roms/gbc/Simpsons, The - Night of the Living Treehouse of Horror (USA, Europe).gbc";
+            </script>
+            <script src="https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@latest/data/loader.js"></script>
+        </div>
+    </div>
+</div>
 {% endblock %}
-```
