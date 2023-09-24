@@ -10,8 +10,13 @@
                     <img src="{{ game_info.thumbnail }}" class="card-img" alt="{{ game_name }}">
                     <div class="card-body">
                         <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#{{ game_id }}DetailsModal">Details</button>
-                        <!-- Replace the "Play" button with JavaScript -->
-                        <button type="button" class="btn btn-info play-button" data-game="{{ game_name }}" data-emucode="{{ game_info.emucode }}" data-rom="{{ game_info.rom_file_location }}">Play</button>
+                        <!-- Replace the "Play" button with a form -->
+                        <form method="post" action="/emulator">
+                            <input type="hidden" name="game" value="{{ game_name }}">
+                            <input type="hidden" name="emucode" value="{{ game_info.emucode }}">
+                            <input type="hidden" name="rom" value="{{ game_info.rom_file_location }}">
+                            <button type="submit" class="btn btn-info">Play</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -39,37 +44,4 @@
         {% endfor %}
     </div>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        // Event listener for the "Play" button
-        $(".play-button").click(function () {
-            var gameName = $(this).data("game");
-            var emucode = $(this).data("emucode");
-            var rom = $(this).data("rom");
-
-            var formData = {
-                game: gameName,
-                emucode: emucode,
-                rom: rom
-            };
-
-            // Send an AJAX POST request to the /emulator endpoint
-            $.ajax({
-    type: "POST",
-    url: "/emulator",
-    data: JSON.stringify(formData),
-    contentType: "application/json",
-    success: function (response) {
-        window.location.href = "/emulator";
-    },
-    error: function (xhr, status, error) {
-        console.error("AJAX error:", status, error);
-    }
-});
-
-        });
-    });
-</script>
 {% endblock %}

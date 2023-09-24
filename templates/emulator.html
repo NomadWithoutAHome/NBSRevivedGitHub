@@ -8,12 +8,17 @@
                 <div id="game"></div>
             </div>
             <script>
+                // Update these variables to use the form data
+                var gameName = "{{ game }}";
+                var emucode = "{{ emucode }}";
+                var rom = "{{ rom }}";
+
                 EJS_player = "#game";
-                EJS_core = "{{ game.emucode }}";
-                EJS_gameName = "{{ game.game }}";
+                EJS_core = emucode;
+                EJS_gameName = gameName;
                 EJS_color = "#0064ff";
                 EJS_pathtodata = "/static/emulatorjs/data";
-                EJS_gameUrl = "{{ game.rom }}";
+                EJS_gameUrl = rom;
             </script>
             <script src="static/emulatorjs/data/loader.js"></script>
         </div>
