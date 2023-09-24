@@ -61,7 +61,7 @@
         "description": "Based on the Treehouse of Horror episodes, the game features seven levels where the player controls the Simpson family members.",
         "thumbnail": "static/images/game_thumbnails/livingtreehouse.jpg",
         "rom_file_location": "/static/roms/gbc/Simpsons, The - Night of the Living Treehouse of Horror (USA, Europe).gbc",
-        "emucode": "gbc"
+        "emucode": "gb"
     },
     "The Simpsons: Road Rage": {
         "year": "2003",

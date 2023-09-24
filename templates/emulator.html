@@ -9,13 +9,13 @@
             </div>
             <script>
                 EJS_player = "#game";
-                EJS_core = "gb";
-                EJS_gameName = "bart";
+                EJS_core = "{{ game.emucode }}";
+                EJS_gameName = "{{ game.game }}";
                 EJS_color = "#0064ff";
-                EJS_pathtodata = "https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@latest/data/";
-                EJS_gameUrl = "static/roms/gbc/Simpsons, The - Night of the Living Treehouse of Horror (USA, Europe).gbc";
+                EJS_pathtodata = "/static/emulatorjs/data";
+                EJS_gameUrl = "{{ game.rom }}";
             </script>
-            <script src="https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@latest/data/loader.js"></script>
+            <script src="static/emulatorjs/data/loader.js"></script>
         </div>
     </div>
 </div>

@@ -1,10 +1,11 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from fastapi.middleware.cors import CORSMiddleware
 
 from helpers import load_json_data
-
-app = FastAPI(docs_url=None, redoc_url=None)
+#app = FastAPI(docs_url=None, redoc_url=None)
+app = FastAPI()
 
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -12,6 +13,14 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 episode_uuids = {}
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=False,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
 
 def get_episode_data():
     return load_json_data('static/data/episode_data.json')
