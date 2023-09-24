@@ -4,13 +4,13 @@
 <div class="container mt-4 games-page">
     <div class="row">
         {% for game_name, game_info in games_data.items() %}
-            {% set game_id = game_name|replace(" ", "_") %}
+            {% set game_id = game_name|format_game_id %}
             <div class="col-md-4">
                 <div class="card" style="width: 18rem;">
                     <img src="{{ game_info.thumbnail }}" class="card-img" alt="{{ game_name }}">
                     <div class="card-body">
-                        <button type="button" class="btn btn-details" data-toggle="modal" data-target="#{{ game_id }}DetailsModal">Details</button>
-                        <a href="{{ game_info.rom_file_location }}" class="btn btn-play" role="button">Play</a>
+                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#{{ game_id }}DetailsModal">Details</button>
+                        <a href="{{ game_info.rom_file_location }}" class="btn btn-info" role="button">Play</a>
                     </div>
                 </div>
             </div>
@@ -21,7 +21,7 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="{{ game_id }}DetailsModalLabel">Game Details: {{ game_name }}</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
