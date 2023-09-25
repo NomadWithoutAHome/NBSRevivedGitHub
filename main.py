@@ -43,6 +43,7 @@ import routes.extra
 import routes.about
 import routes.games
 import routes.emulator
+import routes.cdn
 
 routes.index.init_app(app)
 routes.seasons.init_app(app)
@@ -54,6 +55,7 @@ routes.extra.init_app(app)
 routes.about.init_app(app)
 routes.games.init_app(app)
 routes.emulator.init_app(app)
+routes.cdn.init_app(app)
 
 
 if __name__ == "__main__":

@@ -35,8 +35,8 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light simpsons-navbar">
     <a class="navbar-brand text-white" href="/">
-        <img src="static/images/donut.png" width="40" height="40" class="d-inline-block align-top mr-0" alt="">
-        <img src="static/images/SimpLogo.png" width="200" height="30" alt="">
+        <img src="/static/images/donut.png" width="40" height="40" class="d-inline-block align-top mr-0" alt="">
+        <img src="/static/images/SimpLogo.png" width="200" height="30" alt="">
     </a>
 
     <!-- Add a button for the mobile menu -->
@@ -89,7 +89,7 @@
   const suggestionsDropdown = document.querySelector('.autocomplete-suggestions');
 
   // Fetch episode titles from the episode_data.json file in the static/Data directory
-  fetch('/static/Data/episode_data.json')
+  fetch('/static/data/episode_data.json')
       .then(response => response.json())
       .then(data => {
           // Extract episode titles from the JSON data

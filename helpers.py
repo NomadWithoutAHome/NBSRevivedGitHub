@@ -1,8 +1,10 @@
 # helpers.py
 import json
+import mimetypes
 from uuid import uuid4
 
 import requests
+
 
 
 
@@ -27,7 +29,7 @@ def generate_episode_uuids(episode_data, episode_uuids):
             episode['uuid'] = episode_uuid
 
     # Save the updated episode_data back to the JSON file
-    with open('static/Data/episode_data.json', 'w') as file:
+    with open('static/data/episode_data.json', 'w') as file:
         json.dump(episode_data, file, indent=4)
 
 # Get an episode title by its UUID.
@@ -94,3 +96,24 @@ def get_season_number_by_uuid(uuid_str, episode_data):
             if episode.get('uuid') == uuid_str:
                 return extract_season_number(season_name)
     return None
+
+
+
+import mimetypes
+
+def get_content_type(file_path: str) -> str:
+    # Check for custom MIME type for .data files
+    if file_path.endswith(".data"):
+        return "application/x-7z-compressed"
+
+    # Get the content type based on the file extension
+    mime_type, _ = mimetypes.guess_type(file_path)
+    file_extension = mimetypes.guess_extension(mime_type)
+
+    # Check if a content type was determined
+    if file_extension:
+        return file_extension
+    else:
+        return "Unknown MIME Type"
+
+
