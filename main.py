@@ -5,10 +5,12 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.responses import FileResponse
 from starlette.types import ASGIApp
 
 from helpers import load_json_data
 app = FastAPI(docs_url=None, redoc_url=None)
+
 
 def get_content_type(file_path: str) -> str:
     # Check for custom MIME type for .data files
@@ -52,6 +54,17 @@ app.add_middleware(
     allow_methods=["*"],  # Allows all methods
     allow_headers=["*"],  # Allows all headers
 )
+
+@app.get("/robots.txt")
+async def get_robots_txt():
+    # Path to your robots.txt file
+    robots_txt_path = "static/robots.txt"
+    return FileResponse(robots_txt_path, media_type="text/plain")
+
+@app.get("/sitemap")
+async def get_sitemap_xml():
+    robots_txt_path = "static/sitemap.xml"
+    return FileResponse(robots_txt_path, media_type="text/xml")
 
 def get_episode_data():
     return load_json_data('static/data/episode_data.json')
