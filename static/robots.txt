@@ -1,2 +1,3 @@
 User-agent: *
 Disallow: /video/
+sitemap: https://www.nobss.online/sitemap.xml
