@@ -18,5 +18,3 @@ def upload_directory(directory_path):
 #upload_directory(r"C:\Users\SeanS\PycharmProjects\NBSRevivedGitHub\static\emulatorjs\data")
 
 #get number of files in deta drive
-
-print(len(cdn_drive.list()['names']))

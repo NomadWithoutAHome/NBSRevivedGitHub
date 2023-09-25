@@ -1,11 +1,42 @@
-from fastapi import FastAPI
+import mimetypes
+
+from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.types import ASGIApp
 
 from helpers import load_json_data
-#app = FastAPI(docs_url=None, redoc_url=None)
-app = FastAPI()
+app = FastAPI(docs_url=None, redoc_url=None)
+
+def get_content_type(file_path: str) -> str:
+    # Check for custom MIME type for .data files
+    if file_path.endswith(".data"):
+        return "application/x-7z-compressed"
+
+    # Get the content type based on the file extension
+    mime_type, _ = mimetypes.guess_type(file_path)
+    print(mime_type)
+    if mime_type:
+        return mime_type
+    else:
+        return "application/octet-stream"  # Default MIME type
+
+class ForceContentTypeMiddleware(BaseHTTPMiddleware):
+    def __init__(self, app: ASGIApp):
+        super().__init__(app)
+
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+
+        if "Content-Type" not in response.headers:
+            # Set the Content-Type header based on the file extension
+            file_path = request.url.path
+            content_type = get_content_type(file_path)
+            response.headers["Content-Type"] = content_type
+
+        return response
 
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
