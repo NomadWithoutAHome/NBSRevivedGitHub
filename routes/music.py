@@ -3,8 +3,8 @@ from fastapi.responses import HTMLResponse
 
 from main import templates
 def init_app(app: FastAPI):
-    @app.get('/extras', response_class=HTMLResponse)
-    def extras(request: Request):
+    @app.get('/music', response_class=HTMLResponse)
+    def musics(request: Request):
         """
         Render the about.html template.
 
@@ -14,4 +14,4 @@ def init_app(app: FastAPI):
         Returns:
             HTMLResponse: The rendered HTML template.
         """
-        return templates.TemplateResponse('extra.html', {"request": request})
+        return templates.TemplateResponse('music.html', {"request": request})

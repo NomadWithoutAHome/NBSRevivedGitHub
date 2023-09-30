@@ -1,0 +1,327 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="player">
+    <div class="record">
+        <div class="label"></div>
+    </div>
+    <div class="tone-arm">
+        <div class="control"></div>
+    </div>
+    <button class="btn"></button>
+    <div class="slider-container">
+        <input
+            type="range"
+            class="slider"
+            min="0"
+            max="1"
+            step="0.1"
+            value="0.7"
+        />
+    </div>
+</div>
+
+<!-- Audio element for playing songs -->
+<audio id="album-player" preload="auto"></audio>
+
+<!-- Move the album container below the player -->
+<div class="album-container">
+    <!-- Album cards will be dynamically generated here -->
+</div>
+
+<style>
+    /* Paste your CSS code here */
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    .player {
+        background-color: #d52f31;
+        width: 330px;
+        height: 190px;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+        border-radius: 8px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5), 0 0 12px #be272a;
+    }
+    .record {
+        height: 175px;
+        width: 175px;
+        background-color: #181312;
+        border-radius: 50%;
+        position: absolute;
+        top: 10px;
+        left: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .record:before,
+    .record:after {
+        position: absolute;
+        content: "";
+        border: 5px solid transparent;
+        border-top-color: #2c2424;
+        border-bottom-color: #2c2424;
+        border-radius: 50%;
+    }
+    .record:before {
+        height: 135px;
+        width: 135px;
+    }
+    .record:after {
+        height: 95px;
+        width: 95px;
+    }
+    .label {
+        background-color: #181312;
+        height: 15px;
+        width: 15px;
+        border: 20px solid #ff8e00;
+        border-radius: 50%;
+    }
+    .tone-arm {
+        height: 90px;
+        width: 6px;
+        background-color: #ffffff;
+        position: absolute;
+        top: 25px;
+        right: 95px;
+        transition: 1s;
+        transform-origin: top;
+    }
+    .control {
+        background-color: #181312;
+        height: 17px;
+        width: 17px;
+        border: 10px solid #2c2c2c;
+        border-radius: 50%;
+        position: absolute;
+        top: -16px;
+        left: -16px;
+    }
+    .tone-arm:before {
+        content: "";
+        height: 40px;
+        width: 6px;
+        background-color: #ffffff;
+        position: absolute;
+        transform: rotate(30deg);
+        bottom: -36px;
+        right: 10px;
+    }
+    .tone-arm:after {
+        content: "";
+        position: absolute;
+        height: 0;
+        width: 10px;
+        border-top: 18px solid #b2aea6;
+        border-left: 2px solid transparent;
+        border-right: 2px solid transparent;
+        top: 108px;
+        right: 12.5px;
+        transform: rotate(30deg);
+    }
+    .btn {
+        height: 28px;
+        width: 28px;
+        background-color: #ed5650;
+        border-radius: 50%;
+        position: absolute;
+        bottom: 20px;
+        right: 30px;
+        border: none;
+        border: 3.5px solid #be272a;
+        outline: none;
+        cursor: pointer;
+    }
+    .slider {
+        -webkit-appearance: none;
+        appearance: none;
+        transform: rotate(-90deg);
+        width: 90px;
+        height: 7px;
+        position: absolute;
+        left: 233px;
+        top: 60px;
+        background-color: #be272a;
+        outline: none;
+        border-radius: 3px;
+        border: 6px solid #ed5650;
+    }
+    .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 10px;
+        height: 12px;
+        background-color: #ffffff;
+        cursor: pointer;
+    }
+    .play {
+        transform: rotate(30deg);
+        transform-origin: top;
+        transition: 1s;
+    }
+    .on {
+        animation: spin 3s 1s linear infinite;
+    }
+    @keyframes spin {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* Add styles for album cards */
+    .album-card {
+        display: inline-block;
+        margin: 10px; /* Adjust the margin as per your preference */
+        cursor: pointer;
+        /* Add other styling properties like width, height, border, etc. */
+    }
+</style>
+
+<script>
+  let state = false;
+  let btn = document.querySelector(".btn");
+  let record = document.querySelector(".record");
+  let toneArm = document.querySelector(".tone-arm");
+  let slider = document.querySelector(".slider");
+  let albumPlayer = document.getElementById("album-player");
+  let currentAlbum = null; // Store the currently selected album data
+  let currentSongIndex = 0; // Track the current song index
+  let isPaused = false; // Track if the playback is paused
+
+  function createAlbumCards(albumsData) {
+    const albumContainer = document.querySelector(".album-container");
+
+    albumsData.forEach((album) => {
+      const albumCard = document.createElement("div");
+      albumCard.classList.add("album-card");
+
+      // Set the click event to load the album
+      albumCard.addEventListener("click", () => {
+        loadAlbum(album);
+      });
+
+      // Create an image element for the album cover
+      const albumImage = document.createElement("img");
+      albumImage.src = album.image_url;
+      albumCard.appendChild(albumImage);
+
+      // Create a title element for the album
+      const albumTitle = document.createElement("div");
+      albumTitle.textContent = album.title;
+      //albumCard.appendChild(albumTitle);
+
+      // Add the album card to the container
+      albumContainer.appendChild(albumCard);
+    });
+  }
+
+  btn.addEventListener("click", () => {
+    // Check if an album is loaded
+    if (currentAlbum) {
+      if (state == false) {
+        record.classList.add("on");
+        toneArm.classList.add("play");
+        playAlbum(); // Start playing the album
+      } else {
+        record.classList.remove("on");
+        toneArm.classList.remove("play");
+        pauseAlbum(); // Pause the album playback
+      }
+      state = !state;
+    }
+  });
+
+  slider.addEventListener("input", (e) => {
+    albumPlayer.volume = Number(e.target.value);
+  });
+
+  // Function to clear and load songs in the album player
+function loadAlbum(albumData) {
+  // Check if the album is already loaded
+  if (currentAlbum === albumData) {
+    console.log("Attempted to load an already loaded album:", albumData.title);
+    return; // Album is already loaded, do nothing
+  }
+
+  albumPlayer.innerHTML = ""; // Clear existing songs
+
+  // Add songs from the selected album to the player
+  albumData.songs.forEach((song, index) => {
+    const audioSource = document.createElement("source");
+    audioSource.src = song.audio_url;
+    audioSource.type = "audio/mpeg";
+    if (index === currentSongIndex) {
+      albumPlayer.appendChild(audioSource);
+    }
+  });
+
+  // Store the currently selected album data
+  currentAlbum = albumData;
+
+  console.log("Album loaded:", albumData.title); // Print a message when the album is loaded
+}
+
+  // Function to play the loaded album
+  function playAlbum() {
+    if (currentAlbum) {
+      if (isPaused) {
+        setTimeout(() => {
+          albumPlayer.play(); // Play the song from the current position
+        }, 2000); // 2000 milliseconds = 2 seconds
+        isPaused = false; // Reset the paused state
+      } else {
+        albumPlayer.load(); // Load the current song
+        // Add a delay before the song starts playing
+        setTimeout(() => {
+          albumPlayer.play(); // Play the song from the current position
+        }, 2000); // 2000 milliseconds = 2 seconds
+      }
+    }
+  }
+
+  // Function to pause the playback of the loaded song in an album
+  function pauseAlbum() {
+    if (currentAlbum) {
+      albumPlayer.pause();
+      isPaused = true; // Set the paused state
+    }
+  }
+
+  // Function to move the tone arm back when the album playback ends
+  albumPlayer.addEventListener("ended", () => {
+    // Move to the next song if available
+    if (currentAlbum && currentSongIndex < currentAlbum.songs.length - 1) {
+      currentSongIndex++;
+      loadAlbum(currentAlbum); // Load the next song
+      playAlbum(); // Play the next song
+    } else {
+      // If it's the last song in the album, stop the spinning animation of the record
+      record.classList.remove("on"); // Stop the spinning animation
+      toneArm.classList.remove("play"); // Move the tone arm back
+    }
+  });
+
+  // Function to move the tone arm onto the record when the song playback starts
+  albumPlayer.addEventListener("playing", () => {
+    toneArm.classList.add("play");
+  });
+
+  // Load albums data from JSON file
+  fetch("static/data/album_data.json")
+    .then((response) => response.json())
+    .then((data) => {
+      // Call function to create and add album cards to container
+      createAlbumCards(data.albums);
+    })
+    .catch((error) => {
+      console.error("Error loading albums data:", error);
+    });
+</script>
+
+{% endblock %}

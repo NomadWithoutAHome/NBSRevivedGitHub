@@ -1,0 +1,159 @@
+{
+    "albums": [
+        {
+            "title": "In the key of Springfield",
+            "image_url": "/static/images/covers/Songs_in_the_Key_of_Springfield.png",
+            "track_count": 26,
+            "songs": [
+                {
+                    "title": "Simpsons Theme Song",
+                    "audio_url": "https://audio.jukehost.co.uk/9WgPSKpQWt3Q2BBhXZ1I3OcaCU1yjcJW"
+                },
+                {
+                    "title": "We Do",
+                    "audio_url": "https://audio.jukehost.co.uk/FDzRogPamuJb0KzHZlJ17TMEnOeU1H0t"
+                },
+                {
+                    "title": "Dancin Homer",
+                    "audio_url": "https://audio.jukehost.co.uk/9y0lVvStp4BTfTea8bBw1ieC24X49urQ"
+                },
+                {
+                    "title": "Homer and Apu",
+                    "audio_url": "https://audio.jukehost.co.uk/mwJ8LZgpPDr0cuZkpqBEstCFR0mKWaSd"
+                },
+                {
+                    "title": "Round Springfield",
+                    "audio_url": "https://audio.jukehost.co.uk/19yE6kF3uRJicE3rmXPVlfJ2olIYln66"
+                },
+                {
+                    "title": "Oh Streetcar!",
+                    "audio_url": "https://audio.jukehost.co.uk/G126KDJstX7ICkrEGe5g0A9n3mnwz6M3"
+                },
+                {
+                    "title": "Jingle Bells",
+                    "audio_url": "https://audio.jukehost.co.uk/0eJ8OyTlhJZMZDztQeoNBUWzgHFMI2i5"
+                },
+                {
+                    "title": "Itchy and Scratchy Main Title Theme",
+                    "audio_url": "https://audio.jukehost.co.uk/8k1i06Cs9pdS2gxWGreXab68cO5h47oI"
+                },
+                {
+                    "title": "Itchy and Scratchy End Credits Theme",
+                    "audio_url": "https://audio.jukehost.co.uk/hRHMxBiH9AeWO6JVRCy7flKXhgXzDCj7"
+                },
+                {
+                    "title": "The Day The Violence Died",
+                    "audio_url": "https://audio.jukehost.co.uk/sXfLZ96joR3wKp0X72QyPs326lXNarCu"
+                },
+                {
+                    "title": "Senor Burns",
+                    "audio_url": "https://audio.jukehost.co.uk/KfKjWVBRfsaUragDFJmaV4aIr1xK0jkt"
+                },
+                {
+                    "title": "The Simpsons End Credits Theme",
+                    "audio_url": "https://audio.jukehost.co.uk/aPhDyMoUYBB9OlkXULNxkRmojNxG2JXu"
+                },
+                {
+                    "title": "Kamp Krusty",
+                    "audio_url": "https://audio.jukehost.co.uk/v7LUXL5nA4oJHQpqG51MU387ENChYzYV"
+                },
+                {
+                    "title": "End Credits Suite 1",
+                    "audio_url": "https://audio.jukehost.co.uk/dtc1tiGLe0qWrqoyCjLsWs3rrsjefEm3"
+                },
+                {
+                    "title": "End Credits Suite 2",
+                    "audio_url": "https://audio.jukehost.co.uk/UG2Se9h7u23q7yVFVmgY4EJnHpVsbhBA"
+                },
+                {
+                    "title": "End Credits Suite 3",
+                    "audio_url": "https://audio.jukehost.co.uk/dN6qDs3pOUZCt0SD9slKjJ65bfnDnDGZ"
+                },
+                {
+                    "title": "Treehouse Of Horror V",
+                    "audio_url": "https://audio.jukehost.co.uk/4KKkulM1hf67RrKqeNy9ox5uL54WvSXx"
+                },
+                {
+                    "title": "Honey Roasted Peanuts",
+                    "audio_url": "https://audio.jukehost.co.uk/BfZtNtPSj4y1ceM81rhxG10kBBj6WhPu"
+                },
+                {
+                    "title": "Boy Scoutz In The Hood",
+                    "audio_url": "https://audio.jukehost.co.uk/HQkOYV0Bpxx1D9kuiKZhDsYOElNE9rWk"
+                },
+                {
+                    "title": "Two Dozen and One Greyhounds",
+                    "audio_url": "https://audio.jukehost.co.uk/iqVs9q0UXbwC6FLmV5MyHTqsONeOtwgC"
+                },
+                {
+                    "title": "Eye On Springfield Theme",
+                    "audio_url": "https://audio.jukehost.co.uk/wx4RWt4KJmqKWeX0Ldg4F43oIXe07bwT"
+                },
+                {
+                    "title": "Flaming Moes",
+                    "audio_url": "https://audio.jukehost.co.uk/vDpwJuxuYzcTLIeKVtrX5fPRlfgeXl31"
+                },
+                {
+                    "title": "Homer's Barbershop Quartet",
+                    "audio_url": "https://audio.jukehost.co.uk/SK5X37Vk89MObtW2bLg1yOaKldbaDv9A"
+                },
+                {
+                    "title": "TV Sucks",
+                    "audio_url": "https://audio.jukehost.co.uk/OaacAJfZ0PaSR9ulhEtDVKaqi51mvO3q"
+                },
+                {
+                    "title": "A Fish Called Selma",
+                    "audio_url": "https://audio.jukehost.co.uk/vpZ6D1rGTHXt4IAStr4JcE0TuR7uCLsJ"
+                },
+                {
+                    "title": "Send In The Clowns",
+                    "audio_url": "https://audio.jukehost.co.uk/GzXwwsqzBzINv22SHmZsJ8bqb0EVjSpX"
+                },
+                {
+                    "title": "The Monorail Song",
+                    "audio_url": "https://audio.jukehost.co.uk/fIyhOvJoyF9cjumNIdwcPymce4JFtMWb"
+                },
+                {
+                    "title": "in Search Of An Out Of Body Vibe",
+                    "audio_url": "https://audio.jukehost.co.uk/14W268EzaYkNuthPZhklt8l0DuGuMkX8"
+                },
+                {
+                    "title": "Cool",
+                    "audio_url": "https://audio.jukehost.co.uk/bEJUVVIEPL45hajL0e40cKuQQxP5RV2O"
+                },
+                {
+                    "title": "Bagged Me A Homer",
+                    "audio_url": "https://audio.jukehost.co.uk/LtAaq4Ak44rgOPnN8fmIsY61SY5pDxoU"
+                },
+                {
+                    "title": "It Was A Very Good Beer",
+                    "audio_url": "https://audio.jukehost.co.uk/gUuSyxMgDWj6Sd4hLdvoWc4YxtIuRAoF"
+                },
+                {
+                    "title": "Bart Sells His Soul",
+                    "audio_url": "https://audio.jukehost.co.uk/aOTPhzaelH3ipKyvmw0LY8VUSC85W4H6"
+                },
+                {
+                    "title": "Happy Birthday Lisa",
+                    "audio_url": "https://audio.jukehost.co.uk/3WqKaKehAAihagq3HamyFRWMJ24uDMWF"
+                },
+                {
+                    "title": "End Credits Suite 5",
+                    "audio_url": "https://audio.jukehost.co.uk/iIkePi3JAKOhrh8biqCQCIiP4dcHKFfe"
+                },
+                {
+                    "title": "End Credits Suite 6",
+                    "audio_url": "https://audio.jukehost.co.uk/o28dSc1IYYzlJH4cXVEPYPrxNAq2obKW"
+                },
+                {
+                    "title": "End Credits Suite 7",
+                    "audio_url": "https://audio.jukehost.co.uk/3Gl08e7Yl1TRKdsYhQVMawRRFvCByN1k"
+                },
+                {
+                    "title": "End Credits Suite 8",
+                    "audio_url": "https://audio.jukehost.co.uk/kLQ6aw3GZOUURUnXFAsU6JfOlHTFSVA5"
+                }
+            ]
+        }
+    ]
+}
