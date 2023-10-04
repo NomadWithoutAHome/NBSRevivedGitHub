@@ -9,10 +9,9 @@ from starlette.responses import FileResponse
 from starlette.types import ASGIApp
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from helpers import load_json_data, generate_episode_uuids
+from helpers import load_json_data
 
 app = FastAPI(docs_url=None, redoc_url=None)
-
 
 def get_content_type(file_path: str) -> str:
     # Check for custom MIME type for .data files
@@ -81,6 +80,8 @@ async def http_exception_handler(request, exc):
     return response
 
 
+
+
 @app.get("/robots.txt")
 async def get_robots_txt():
     # Path to your robots.txt file
@@ -113,7 +114,7 @@ import routes.music
 import routes.about
 import routes.games
 import routes.emulator
-import routes.cdn
+# import routes.cdn
 
 routes.index.init_app(app)
 routes.seasons.init_app(app)
@@ -125,7 +126,7 @@ routes.music.init_app(app)
 routes.about.init_app(app)
 routes.games.init_app(app)
 routes.emulator.init_app(app)
-routes.cdn.init_app(app)
+# routes.cdn.init_app(app)
 
 
 if __name__ == "__main__":

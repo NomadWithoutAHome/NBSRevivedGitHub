@@ -1,0 +1,218 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #FFD700; /* Simpsons yellow */
+    font-family: 'Arial', sans-serif;
+}
+
+.music-player {
+    width: 350px;
+    height: 479px;
+    border-radius: 20px;
+    background: rgba(0, 128, 255, 0.2); /* Sky blue */
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    overflow: hidden;
+    color: #FFFFFF; /* White */
+}
+
+.music-name,
+.artist-name {
+    text-align: center;
+    text-transform: capitalize;
+    color: #FF4500; /* Orange-Red */
+}
+
+.music-name {
+    font-size: 40px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.artist-name {
+    font-size: 20px;
+}
+
+.disk {
+    position: relative;
+    display: block;
+    margin: 40px auto;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background-image: url(''); /* Empty URL for initial state */
+    background-size: cover;
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.2);
+    animation: rotate 20s linear infinite;
+    animation-play-state: paused;
+}
+
+.disk.play {
+    animation-play-state: running;
+}
+
+.disk::before{
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #A39E29;
+}
+
+
+.song-slider {
+    width: 100%;
+    position: relative;
+}
+
+.seek-bar {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 5px;
+    border-radius: 10px;
+    background: #FF4500; /* Orange-Red */
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.seek-bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 1px;
+    height: 20px;
+    box-shadow: -400px 0 0 400px #FFD700; /* Simpsons yellow */
+}
+
+.current-time,
+.song-duration {
+    font-size: 14px;
+    color: #FFFFFF; /* White */
+}
+
+.song-duration {
+    position: absolute;
+    right: 0;
+}
+
+.controls {
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.play-btn {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #FF4500; /* Orange-Red */
+    cursor: pointer;
+    border: none;
+}
+
+.play-btn span {
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 30px;
+    border-radius: 2px;
+    background: #FFFFFF; /* White */
+    transition: 0.5s;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.play-btn span:nth-child(2) {
+    left: 55%;
+    transform-origin: center;
+}
+
+.play-btn.pause span:nth-child(2) {
+    transform: translateY(-50%) scaleY(0);
+}
+
+.play-btn.pause span:nth-child(1) {
+    width: 35%;
+    left: 53%;
+    transform: translate(-50%, -50%);
+    border-radius: 0;
+    clip-path: polygon(0 0, 100% 50%, 100% 50%, 0% 100%);
+}
+
+.play-btn.pause {
+    animation: pulse 2s linear infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0;
+    }
+    50% {
+        box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.1);
+    }
+    100% {
+        box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.4);
+    }
+}
+
+@keyframes rotate{
+    0%{
+        transform: rotate(0);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
+
+.btn {
+    width: 40px;
+    height: 40px;
+    background: #FFD700; /* Simpsons yellow */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+}
+
+.album-selector {
+    width: 173px; /* Adjust the width as needed */
+    height: 100%; /* Set the height to match the player's height */
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.album-cover {
+    width: 160px; /* Adjust the width of each album cover */
+    height: 148px; /* Adjust the height of each album cover */
+    background-size: cover;
+    margin-bottom: 10px; /* Add some spacing between album covers */
+    cursor: pointer;
+}
+
+.album-cover:hover {
+    opacity: 0.8; /* Add a hover effect to album covers */
+}

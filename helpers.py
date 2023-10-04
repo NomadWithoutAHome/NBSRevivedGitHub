@@ -105,6 +105,8 @@ def get_content_type(file_path: str) -> str:
     # Check for custom MIME type for .data files
     if file_path.endswith(".data"):
         return "application/x-7z-compressed"
+    elif file_path.endswith(".js"):
+        return "application/javascript"
 
     # Get the content type based on the file extension
     mime_type, _ = mimetypes.guess_type(file_path)
