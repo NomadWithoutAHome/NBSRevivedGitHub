@@ -3,6 +3,7 @@
     {
       "title": "In the Key of Springfield",
       "image_url": "static/images/Music/covers/cover1.png",
+        "cd_cover": "static/images/Music/cds/1.png",
       "track_count": 26,
       "songs": [
         {
@@ -159,6 +160,7 @@
       "title": "The Yellow Album",
       "image_url": "static/images/Music/covers/cover2.png",
       "track_count": 11,
+        "cd_cover": "static/images/Music/cds/2.png",
       "songs": [
         {
           "title": "Love?",

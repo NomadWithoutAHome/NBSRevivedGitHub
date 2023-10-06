@@ -36,13 +36,6 @@ body {
     padding: 15px; /* Optional padding for spacing */
 }
 
-/* Media query to hide the chatbox below 768px window width */
-@media (max-width: 1000px) {
-    .chat-container {
-        display: none;
-    }
-}
-
 
 /* Custom CSS to change the link text color for the "card-link" class */
     .card-link {

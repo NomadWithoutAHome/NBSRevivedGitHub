@@ -91,7 +91,7 @@
         setMusic(0); // Load the first song of the selected album
         isAlbumLoaded = true; // Set the flag to indicate that an album is loaded
         // Change the background image of the disk to the selected album cover
-        disk.style.backgroundImage = `url(${album.image_url})`;
+        disk.style.backgroundImage = `url(${album.cd_cover})`;
         resetPlayButton(); // Reset the play button state
 		playBtn.classList.add('pause');
     }
