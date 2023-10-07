@@ -117,10 +117,11 @@ body {
 }
 
 
-/* Custom CSS to remove the arrow icon */
-.extras-dropdown-toggle::after {
+.extras-dropdown-toggle::after,
+.navbar-nav .dropdown-toggle::after {
     display: none !important;
 }
 
-
-
+.navbar-nav .watch-dropdown-toggle::after {
+    display: none !important;
+}

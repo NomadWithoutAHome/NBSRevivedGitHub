@@ -8325,9 +8325,22 @@
             "Air Date": "October  1, 2023",
             "Runtime": "22m",
             "Thumbnail": "https://www.themoviedb.org/t/p/w227_and_h127_bestv2/caZtNxoTsYojWvOhZYiuCvhN6W9.jpg",
-            "Rating": "0.0",
+            "Rating": "7.4",
             "Episode_vidsrc": "https://vidsrc.to/embed/tv/tt0096697/35/1",
             "uuid": "0299b0c6-1f73-45ec-8add-bf2ccfcbea17"
+        }
+        ],
+    "Movie": [
+        {
+            "Episode Number": "1",
+            "Episode Title": "Simpsons Movie",
+            "Episode Description": "After Homer accidentally pollutes the town's water supply, Springfield is encased in a gigantic dome by the EPA and the Simpsons are declared fugitives.",
+            "Air Date": "June  7, 2007",
+            "Runtime": "1hr 27m",
+            "Thumbnail": "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/s3b8TZWwmkYc2KoJ5zk77qB6PzY.jpg",
+            "Rating": "5.4",
+            "Episode_vidsrc": "https://vidsrc.to/embed/movie/tt0462538",
+            "uuid": "784aef0e-6481-11ee-8c99-0242ac120002"
         }
     ]
 }
