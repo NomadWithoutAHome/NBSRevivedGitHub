@@ -24,3 +24,21 @@ def init_app(app: FastAPI):  # Define init_app function
             return templates.TemplateResponse('season.html', {"request": request, "season_data": season_data,
                                                               "season_number": season_number})
         raise HTTPException(status_code=404, detail="Season not found")
+
+    @app.get('/dshorts', response_class=HTMLResponse)
+    def disney_shorts(request: Request, disney_data: dict = Depends(get_episode_data)):
+        """
+        Render the disneyshorts.html template with DisneyShorts data.
+
+        Args:
+            request (Request): The FastAPI request object.
+            seasons_data (dict): The episodes data.
+
+        Returns:
+            HTMLResponse: The rendered HTML template with DisneyShorts data.
+        """
+        disney_shorts_data = disney_data.get("DisneyShorts", [])
+        print(disney_shorts_data)
+
+        return templates.TemplateResponse('dshorts.html',
+                                          {"request": request, "disney_shorts_data": disney_shorts_data})

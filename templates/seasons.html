@@ -1,10 +1,9 @@
 {% extends "base.html" %}
-
 {% block content %}
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         {% for season in seasons_data %}
-        <div class="col-md-6 mb-4">
+        <div class="col-lg-6 col-md-12 mb-4">
             <a href="/season/{{ season['Season'] }}" class="card-link"> <!-- Add 'href' and 'card-link' class here -->
                 <div class="card shadow">
                     <div class="row no-gutters">

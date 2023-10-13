@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% for episode in disney_shorts_data %}
+        <div class="col-md-6 mb-4">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="d-flex flex-row">
+                    <div class="card-img-container">
+                        <img src="{{ episode['Thumbnail'] }}" alt="Episode {{ episode['Episode Number'] }} Image" class="card-img img-fluid h-100">
+                    </div>
+                    <div class="card-details">
+                        <div class="card-body">
+                            <h5 class="card-title font-weight-bold" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ episode['Episode Title'] }}</a></h5>
+                            <p class="card-text"><small class="text-muted">Rating: {{ episode.get('Rating', '') }} - Air Date: {{ episode.get('Air Date', '') }}</small></p>
+                            <!-- Button group for View Details and Watch buttons -->
+                            <div class="d-flex justify-content-end">
+                                <div class="btn-group" role="group">
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal{{ episode['Episode Number'] }}">
+                                        View Details
+                                    </button>
+                                    <!-- Watch button -->
+                                    <a href="{{ url_for('video', video_uuid=episode.get('uuid', '')) }}" class="btn btn-info ml-2">Watch</a>
+                                </div>
+                            </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal{{ episode['Episode Number'] }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{ episode['Episode Title'] }}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">×</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    {{ episode.get('Episode Description', '')|safe }}
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
