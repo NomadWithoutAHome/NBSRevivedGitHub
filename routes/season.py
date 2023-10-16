@@ -38,7 +38,6 @@ def init_app(app: FastAPI):  # Define init_app function
             HTMLResponse: The rendered HTML template with DisneyShorts data.
         """
         disney_shorts_data = disney_data.get("DisneyShorts", [])
-        print(disney_shorts_data)
 
         return templates.TemplateResponse('dshorts.html',
                                           {"request": request, "disney_shorts_data": disney_shorts_data})

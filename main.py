@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
-from starlette.responses import FileResponse
+from starlette.responses import FileResponse, JSONResponse
 from starlette.types import ASGIApp
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
@@ -26,20 +26,7 @@ def get_content_type(file_path: str) -> str:
     else:
         return "application/octet-stream"  # Default MIME type
 
-class ForceContentTypeMiddleware(BaseHTTPMiddleware):
-    def __init__(self, app: ASGIApp):
-        super().__init__(app)
 
-    async def dispatch(self, request: Request, call_next):
-        response = await call_next(request)
-
-        if "Content-Type" not in response.headers:
-            # Set the Content-Type header based on the file extension
-            file_path = request.url.path
-            content_type = get_content_type(file_path)
-            response.headers["Content-Type"] = content_type
-
-        return response
 
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -47,14 +34,6 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 episode_uuids = {}
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins
-    allow_credentials=False,
-    allow_methods=["*"],  # Allows all methods
-    allow_headers=["*"],  # Allows all headers
-)
 
 
 template_mapping = {
@@ -64,9 +43,6 @@ template_mapping = {
     404: "404.html",  # Not Found
     500: "500.html",  # Internal Server Error
 }
-
-
-
 
 @app.exception_handler(StarletteHTTPException)
 async def http_exception_handler(request, exc):
@@ -114,7 +90,7 @@ import routes.music
 import routes.about
 import routes.games
 import routes.emulator
-# import routes.cdn
+
 
 routes.index.init_app(app)
 routes.seasons.init_app(app)
@@ -126,7 +102,7 @@ routes.music.init_app(app)
 routes.about.init_app(app)
 routes.games.init_app(app)
 routes.emulator.init_app(app)
-# routes.cdn.init_app(app)
+
 
 
 if __name__ == "__main__":

@@ -8318,18 +8318,29 @@
         }
     ],
     "Season 35": [
-        {
-            "Episode Number": "1",
-            "Episode Title": "Homer's Crossing",
-            "Episode Description": "Feeling worthless at work Homer volunteers to be a school crossing guard. But when his safety squad receives too much funding the crossing guards become a force to be feared.",
-            "Air Date": "October  1, 2023",
-            "Runtime": "22m",
-            "Thumbnail": "https://www.themoviedb.org/t/p/w227_and_h127_bestv2/caZtNxoTsYojWvOhZYiuCvhN6W9.jpg",
-            "Rating": "7.4",
-            "Episode_vidsrc": "https://vidsrc.to/embed/tv/tt0096697/35/1",
-            "uuid": "0299b0c6-1f73-45ec-8add-bf2ccfcbea17"
-        }
-        ],
+    {
+        "Episode Number": "1",
+        "Episode Title": "Homer's Crossing",
+        "Episode Description": "Feeling worthless at work Homer volunteers to be a school crossing guard. But when his safety squad receives too much funding the crossing guards become a force to be feared.",
+        "Air Date": "October  1, 2023",
+        "Runtime": "22m",
+        "Thumbnail": "https://www.themoviedb.org/t/p/w227_and_h127_bestv2/caZtNxoTsYojWvOhZYiuCvhN6W9.jpg",
+        "Rating": "7.4",
+        "Episode_vidsrc": "https://vidsrc.to/embed/tv/tt0096697/35/1",
+        "uuid": "0299b0c6-1f73-45ec-8add-bf2ccfcbea17"
+    },
+    {
+        "Episode Number": "2",
+        "Episode Title": "A Mid-Childhood's Night Dream",
+        "Episode Description": "Marge feels an overwhelming dread of the empty nest.",
+        "Air Date": "October 8, 2023 ",
+        "Runtime": "22m",
+        "Thumbnail": "https://www.themoviedb.org/t/p/w227_and_h127_bestv2/ayfdkVnD1VUPq9aVjEPBQd4cUW6.jpg",
+        "Rating": "8.0",
+        "Episode_vidsrc": "https://vidsrc.to/embed/tv/tt0096697/35/2",
+        "uuid": "c2664ff9-6d99-4298-8ec6-3b163700dd36"
+    }
+    ],
     "Movie": [
         {
             "Episode Number": "1",
@@ -8361,7 +8372,7 @@
       "Episode Description": "Maggie's playdate with a mysterious boy. But when Homer is on baby duty, things go awry, and she's determined to save him.",
       "Air Date": "April 10, 2020",
       "Runtime": "4m",
-      "Thumbnail": "https://example.com/thumbnail2.jpg",
+      "Thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzrdsOIgYFU_iHPl5SEiHz6UR1ib9kEKp2H9NjXY8ljBCqVZ9H",
       "Rating": "8.3",
       "Episode_vidsrc": "https://ia801606.us.archive.org/6/items/disney-maggie-simpson-in-playdate-with-destiny/disney-Maggie%20Simpson%20in%20Playdate%20with%20Destiny.mp4",
       "uuid": "1b33fbc6-4005-4148-b320-fc1702517bbf"
@@ -8372,7 +8383,7 @@
       "Episode Description": "Maggie Simpson, who finds herself dealing with all manner of things from a galaxy far, far away when she's dropped off at a Jedi daycare facility.",
       "Air Date": "May 4, 2021",
       "Runtime": "3m",
-      "Thumbnail": "https://example.com/thumbnail3.jpg",
+      "Thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQkHfI0eglbsXQPwCcgEnRE0cUJHjvvozvxoML5dNF4aDFXNF8Q",
       "Rating": "7.2",
       "Episode_vidsrc": "https://ia601606.us.archive.org/6/items/disney-maggie-simpson-in-playdate-with-destiny/disney-Maggie%20Simpson%20in%20The%20Force%20Awakens%20from%20its%20Nap.mp4",
       "uuid": "044d76fa-3c5a-40f0-ac19-1ae57e2921f3"
@@ -8383,7 +8394,7 @@
       "Episode Description": "Maggie Simpson is enrolled at a new daycare facility where she squares off with the foul-tempered Baby Gerald when she befriends a caterpillar.",
       "Air Date": "July 13, 2012",
       "Runtime": "5m",
-      "Thumbnail": "https://example.com/thumbnail4.jpg",
+      "Thumbnail": "https://upload.wikimedia.org/wikipedia/en/d/dd/The_Longest_Daycare_poster.jpg",
       "Rating": "8.0",
       "Episode_vidsrc": "https://ia801606.us.archive.org/6/items/disney-maggie-simpson-in-playdate-with-destiny/disney-Maggie%20Simpson%20in%20The%20Longest%20Daycare.mp4",
       "uuid": "5867600d-eb36-4259-952d-e4976f3c0d63"
@@ -8394,7 +8405,7 @@
       "Episode Description": "Loki joins the Simpsons in Springfield.",
       "Air Date": "July 7, 2021",
       "Runtime": "5m",
-      "Thumbnail": "https://example.com/thumbnail5.jpg",
+      "Thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSr6GIZmoo-trCHkA8uvQohaGUKacPGnLbEg0BjPbdu83ycn34X",
       "Rating": "8.5",
       "Episode_vidsrc": "https://ia601606.us.archive.org/6/items/disney-maggie-simpson-in-playdate-with-destiny/disney-The%20Good%2C%20The%20Bart%2C%20and%20The%20Loki.mp4",
       "uuid": "997b0281-59c3-4fa8-b398-e1bc5d9ef72d"
@@ -8405,7 +8416,7 @@
       "Episode Description": "Lisa and Bart approach a castle, and Lisa is excited to become an officially recognized Disney Princess. However, Bart turns out to have been a disguise by Loki to trick Lisa into instead joining forces with the Disney Villains.",
       "Air Date": "September 8, 2022",
       "Runtime": "4m",
-      "Thumbnail": "https://example.com/thumbnail6.jpg",
+      "Thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYn6dRqgv2zhAeGSsCJW0oAvYKCtLc-kL19yt0Wnur8s_vABgS",
       "Rating": "7.8",
       "Episode_vidsrc": "https://ia601606.us.archive.org/6/items/disney-maggie-simpson-in-playdate-with-destiny/disney-Welcome%20to%20the%20Club.mp4",
       "uuid": "55d482d4-fecc-43a7-aebb-c0a64467ba24"
@@ -8416,7 +8427,7 @@
       "Episode Description": "Maggie conducts the conflict in Springfield against a group of Imperial TIE fighters. Maggie jumps in Grogu's floating stroller and takes off across the galaxy in hyperspace, but Homer loses track of her. Maggie conducts the conflict in Springfield against a group of Imperial TIE fighters.",
       "Air Date": "May 4, 2022",
       "Runtime": "4m",
-      "Thumbnail": "https://example.com/thumbnail7.jpg",
+      "Thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQqs0pHNBxosv7JrEpYbVuJO1IhXafmKRGPiJCaX9FlzcGgUptR",
       "Rating": "7.7",
       "Episode_vidsrc": "https://ia601606.us.archive.org/6/items/disney-maggie-simpson-in-playdate-with-destiny/disney-Maggie%20Simpson%20in%20%E2%80%9CRogue%20Not%20Quite%20One%E2%80%9D.mp4",
       "uuid": "5745a474-4c97-483b-a0f3-f03ecc2fe5d1"
@@ -8427,7 +8438,7 @@
       "Episode Description": "Billie Eilish meets Lisa Simpson and they embark on an artistic journey.",
       "Air Date": " April 22, 2022",
       "Runtime": "5m",
-      "Thumbnail": "https://example.com/thumbnail8.jpg",
+      "Thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQTmrt44wewlK0rBBZwGTr1QC0oNxIarD3TQfEiKKKjZFhi45UE",
       "Rating": "7.9",
       "Episode_vidsrc": "https://ia601606.us.archive.org/6/items/disney-maggie-simpson-in-playdate-with-destiny/disney-When%20Billie%20Met%20Lisa.mp4",
       "uuid": "fc0b754f-24ca-40d0-be7f-be188db7f8fc"
@@ -8438,7 +8449,7 @@
       "Episode Description": "The Simpsons celebrate Christmas with their unique traditions.",
       "Air Date": "December 15, 2022",
       "Runtime": "4m",
-      "Thumbnail": "https://example.com/thumbnail9.jpg",
+      "Thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTFPgNgCZ_J3_75hHqoPzMUf9rrjQPWXoR9Hyl0x4E0kqLnGdFA",
       "Rating": "7.6",
       "Episode_vidsrc": "https://ia601606.us.archive.org/6/items/disney-maggie-simpson-in-playdate-with-destiny/disney-The%20Simpsons%20meet%20the%20Bocellis%20in%20%E2%80%9CFeliz%20Navidad%E2%80%9D.mp4",
       "uuid": "5d1e429d-99e2-4e96-a652-2abb3d257f6e"
@@ -8449,7 +8460,7 @@
       "Episode Description": "a 3-minute short that serves as the music video for the song by Bad Bunny of the same name. The short is entirely in Spanish.",
       "Air Date": "December 24, 2021",
       "Runtime": "3m",
-      "Thumbnail": "https://example.com/thumbnail10.jpg",
+      "Thumbnail": "https://upload.wikimedia.org/wikipedia/en/e/ed/Te_Deseo_Lo_Mejor.jpg",
       "Rating": "7.4",
       "Episode_vidsrc": "https://ia801606.us.archive.org/6/items/disney-maggie-simpson-in-playdate-with-destiny/disney-Te%20Deseo%20Lo%20Mejor.mp4",
       "uuid": "eab91f3c-0583-4a4d-a6c0-784efd645b0c"

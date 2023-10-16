@@ -23,4 +23,31 @@
     </div>
 </div>
 {% endif %}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+// The secret code
+var secretCode = 'vantra';
+
+var userInput = '';
+var audio = new Audio('https://www.myinstants.com/media/sounds/grunt-birthday-party.mp3');
+
+window.addEventListener('keyup', function(e) {
+
+  userInput += e.key;
+
+
+  if (userInput.endsWith(secretCode)) {
+  audio.play();
+    Swal.fire({
+      title: 'Vantra Hub',
+      text: 'Congratulations, you found the awesome easter egg, Vantra Hub is a newly released Script Hub made for dominating your opponents in roblox, join the discord for more information! ',
+      confirmButtonText: '<a href="https://discord.gg/y5pNJ3gM">Join Discord</a>'
+    });
+  }
+
+  if (userInput.length > secretCode.length) {
+    userInput = userInput.substr(userInput.length - secretCode.length);
+  }
+});
+</script>
 {% endblock %}
