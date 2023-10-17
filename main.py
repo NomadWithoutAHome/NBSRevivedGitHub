@@ -90,7 +90,7 @@ import routes.music
 import routes.about
 import routes.games
 import routes.emulator
-
+import routes.trivia
 
 routes.index.init_app(app)
 routes.seasons.init_app(app)
@@ -102,6 +102,7 @@ routes.music.init_app(app)
 routes.about.init_app(app)
 routes.games.init_app(app)
 routes.emulator.init_app(app)
+routes.trivia.init_app(app)
 
 
 
