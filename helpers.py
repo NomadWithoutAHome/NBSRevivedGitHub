@@ -118,4 +118,16 @@ def get_content_type(file_path: str) -> str:
     else:
         return "Unknown MIME Type"
 
+def send_to_discord(embed_data):
+    webhook_url = "https://discord.com/api/webhooks/1166098003677937896/LVdeip3H8bTULyHXMlLo3nfs--FASUzKFhM8hcLN5gwCvFkiaA2NZKA8BPLzo3jmMb9f"
+    data = {
+        "embeds": [embed_data]
+    }
+
+    response = requests.post(webhook_url, json=data)
+
+    if response.status_code != 204:
+        print(f"Failed to send data to Discord: {response.status_code} - {response.text}")
+
+
 
