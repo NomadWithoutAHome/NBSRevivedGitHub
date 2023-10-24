@@ -2,8 +2,13 @@
 import json
 import mimetypes
 from uuid import uuid4
+import random
+import time
 
 import requests
+
+from fastapi import Request
+from starlette.middleware.sessions import SessionMiddleware
 
 
 
@@ -130,4 +135,41 @@ def send_to_discord(embed_data):
         print(f"Failed to send data to Discord: {response.status_code} - {response.text}")
 
 
+def create_session_middleware(app):
+    return SessionMiddleware(app, secret_key="your_secret_key")
 
+def get_session(request: Request):
+    return request.session
+
+def track_session(request: Request):
+    client_ip = get_client_ip()
+    print(client_ip)
+    if client_ip:
+        # The client IP is in a comma-separated list; you might want to split it
+        print(client_ip)
+    session_id = request.session.get("session_id")
+    visited_page = request.url.path
+
+    discord_embed_data = {
+        "title": "User Session Tracking",
+        "description": f"User IP: {client_ip}\nSession ID: {session_id}\nVisited Page: {visited_page}",
+    }
+
+    return discord_embed_data
+
+def generate_custom_user_id():
+    timestamp = int(time.time())
+    random_component = random.randint(10000, 99999)  # Generate a random number
+    user_id = f"UID_{timestamp}_{random_component}"
+    return user_id
+
+def get_client_ip():
+    try:
+        response = requests.get("https://api.ipify.org?format=json")
+        if response.status_code == 200:
+            data = response.json()
+            client_ip = data.get("ip")
+            return client_ip
+    except Exception as e:
+        # Handle any errors or exceptions here
+        pass

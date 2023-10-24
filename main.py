@@ -3,15 +3,21 @@ import mimetypes
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.middleware.cors import CORSMiddleware
-from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import FileResponse, JSONResponse
-from starlette.types import ASGIApp
+from starlette.middleware.sessions import SessionMiddleware
+from starlette.datastructures import Secret
+
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from helpers import load_json_data
 
 app = FastAPI(docs_url=None, redoc_url=None)
+
+secret_key = Secret("aE6Nf2U1ldkwIjNzeCs6rBL4KPy7sGHS")
+
+# Add the session middleware to the app
+app.add_middleware(SessionMiddleware, secret_key=secret_key, session_cookie="fastapi-session")
+
 
 def get_content_type(file_path: str) -> str:
     # Check for custom MIME type for .data files

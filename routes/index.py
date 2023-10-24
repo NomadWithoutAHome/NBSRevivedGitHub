@@ -1,11 +1,20 @@
 from fastapi import FastAPI, Request, Cookie, Depends
 from fastapi.responses import HTMLResponse
 
-from helpers import get_episode_by_uuid, get_random_simpsons_quote
+from helpers import get_episode_by_uuid, get_random_simpsons_quote , send_to_discord, track_session, generate_custom_user_id
 from main import get_episode_data, templates
 
 
 def init_app(app: FastAPI):  # Define init_app function
+
+    def session_middleware(request: Request, call_next):
+        # Your session management logic goes here, including creating and tracking the session
+        # You can use the track_session function here if needed
+        response = call_next(request)
+        return response
+
+    # Apply the session management middleware
+    app.middleware("http")(session_middleware)
     @app.get('/', response_class=HTMLResponse)
     def index(
         request: Request,
@@ -23,6 +32,11 @@ def init_app(app: FastAPI):  # Define init_app function
         Returns:
             HTMLResponse: The rendered HTML template.
         """
+        request.session['session_id'] = generate_custom_user_id()
+        embed_data = track_session(request)
+        # Call the send_to_discord function to send data to Discord
+        send_to_discord(embed_data)
+
         # Retrieve the last watched episode data based on the stored cookie value (e.g., episode UUID).
         last_watched_episode_data = get_episode_by_uuid(last_watched_episode, episode_data)  # Modify this line
 
