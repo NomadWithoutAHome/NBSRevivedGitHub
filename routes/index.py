@@ -15,6 +15,11 @@ def init_app(app: FastAPI):  # Define init_app function
 
     # Apply the session management middleware
     app.middleware("http")(session_middleware)
+
+    @app.get('/get-client-ip')
+    def get_client_ip(request: Request):
+        client_ip = request.client.host
+        return {"client_ip": client_ip}
     @app.get('/', response_class=HTMLResponse)
     def index(
         request: Request,

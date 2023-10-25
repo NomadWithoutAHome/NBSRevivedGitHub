@@ -43,3 +43,21 @@ def init_app(app: FastAPI):  # Define init_app function
 
         return templates.TemplateResponse('dshorts.html',
                                           {"request": request, "disney_shorts_data": disney_shorts_data})
+
+    @app.get('/shorts', response_class=HTMLResponse)
+    def shorts(request: Request, short_data: dict = Depends(get_episode_data)):
+        """
+        Render the disneyshorts.html template with DisneyShorts data.
+
+        Args:
+            request (Request): The FastAPI request object.
+            seasons_data (dict): The episodes data.
+
+        Returns:
+            HTMLResponse: The rendered HTML template with DisneyShorts data.
+        """
+        short_shorts_data = short_data.get("Shorts", [])
+        print(short_shorts_data)
+
+        return templates.TemplateResponse('dshorts.html',
+                                          {"request": request, "short_shorts_data": short_shorts_data})

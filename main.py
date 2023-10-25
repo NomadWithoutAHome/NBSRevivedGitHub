@@ -8,7 +8,7 @@ from starlette.datastructures import Secret
 
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from helpers import load_json_data
+from helpers import load_json_data , generate_episode_uuids
 
 app = FastAPI(docs_url=None, redoc_url=None)
 

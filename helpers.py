@@ -141,8 +141,9 @@ def create_session_middleware(app):
 def get_session(request: Request):
     return request.session
 
+
 def track_session(request: Request):
-    client_ip = get_client_ip()
+    client_ip = request.client.host
     print(client_ip)
     if client_ip:
         # The client IP is in a comma-separated list; you might want to split it
