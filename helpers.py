@@ -153,7 +153,7 @@ def track_session(request: Request):
 
     discord_embed_data = {
         "title": "User Session Tracking",
-        "description": f"User IP: {client_ip}\nSession ID: {session_id}\nVisited Page: {visited_page}",
+        "description": f"Session ID: {session_id}\nVisited Page: {visited_page}",
     }
 
     return discord_embed_data

@@ -39,6 +39,9 @@ def init_app(app: FastAPI):  # Define init_app function
         Returns:
             HTMLResponse: The rendered HTML template with DisneyShorts data.
         """
+        embed_data = track_session(request)
+        # Call the send_to_discord function to send data to Discord
+        send_to_discord(embed_data)
         disney_shorts_data = disney_data.get("DisneyShorts", [])
 
         return templates.TemplateResponse('dshorts.html',
@@ -58,6 +61,9 @@ def init_app(app: FastAPI):  # Define init_app function
             :param request:
             :param short_data:
         """
+        embed_data = track_session(request)
+        # Call the send_to_discord function to send data to Discord
+        send_to_discord(embed_data)
         data = short_data.get("Shorts", [])
 
         return templates.TemplateResponse('shorts.html',
