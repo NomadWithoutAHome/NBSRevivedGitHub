@@ -29,11 +29,11 @@
   }
 </style>
 {% if last_watched_episode %}
-<div class="card" style="width: 18rem; position: fixed; bottom: 20px; right: 20px;">
-    <div class="card-header">
-        Last Watched Episode
+<div class="card">
+    <div class="card-header" style="background-color: #00b0ff; font-family: 'Homer Simpson Revised', sans-serif;">
+        Last Watched
     </div>
-    <ul class="list-group list-group-flush">
+    <ul class="list-group list-group-flush" style="font-family: 'Homer Simpson Revised', sans-serif;">
         <li class="list-group-item">{{ last_watched_episode['Episode Title'] }}</li>
     </ul>
 </div>
