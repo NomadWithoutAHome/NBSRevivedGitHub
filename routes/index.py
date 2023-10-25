@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request, Cookie, Depends
 from fastapi.responses import HTMLResponse
 
-from helpers import get_episode_by_uuid, get_random_simpsons_quote , send_to_discord, track_session, generate_custom_user_id
+from helpers import get_episode_by_uuid, get_random_simpsons_quote , send_to_discord, track_session, generate_custom_user_id , get_session_id , get_session
 from main import get_episode_data, templates
 
 
@@ -24,7 +24,8 @@ def init_app(app: FastAPI):  # Define init_app function
     def index(
         request: Request,
         last_watched_episode: str = Cookie(default=None),
-        episode_data: dict = Depends(get_episode_data)  # Add this line
+        episode_data: dict = Depends(get_episode_data),  # Add this line
+        session_id: str = Depends(get_session_id)
     ):
         """
         Render the index.html template with a random Simpsons quote and last watched episode.
@@ -37,7 +38,7 @@ def init_app(app: FastAPI):  # Define init_app function
         Returns:
             HTMLResponse: The rendered HTML template.
         """
-        request.session['session_id'] = generate_custom_user_id()
+        request.session['session_id'] = session_id
         embed_data = track_session(request)
         # Call the send_to_discord function to send data to Discord
         send_to_discord(embed_data)

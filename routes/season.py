@@ -62,6 +62,7 @@ def init_app(app: FastAPI):  # Define init_app function
             :param short_data:
         """
         embed_data = track_session(request)
+
         # Call the send_to_discord function to send data to Discord
         send_to_discord(embed_data)
         data = short_data.get("Shorts", [])

@@ -150,10 +150,11 @@ def track_session(request: Request):
         print(client_ip)
     session_id = request.session.get("session_id")
     visited_page = request.url.path
+    last_episode = request.session.get("last_episode")
 
     discord_embed_data = {
         "title": "User Session Tracking",
-        "description": f"Session ID: {session_id}\nVisited Page: {visited_page}",
+        "description": f"Session ID: {session_id}\nVisited Page: {visited_page}\nLast Episode: {last_episode}",
     }
 
     return discord_embed_data
@@ -164,13 +165,31 @@ def generate_custom_user_id():
     user_id = f"UID_{timestamp}_{random_component}"
     return user_id
 
-def get_client_ip():
-    try:
-        response = requests.get("https://api.ipify.org?format=json")
-        if response.status_code == 200:
-            data = response.json()
-            client_ip = data.get("ip")
-            return client_ip
-    except Exception as e:
-        # Handle any errors or exceptions here
-        pass
+def set_or_regenerate_session_id(request: Request):
+    if "session_id" not in request.session or "session_timestamp" not in request.session:
+        # Session ID doesn't exist, or session timestamp doesn't exist (e.g., new session)
+        request.session['session_id'] = generate_custom_user_id()
+        request.session['session_timestamp'] = int(time.time())
+    else:
+        # Check if the session has expired (e.g., after 30 minutes)
+        current_time = int(time.time())
+        session_timestamp = request.session['session_timestamp']
+        if current_time - session_timestamp >= 1800:  # 1800 seconds = 30 minutes
+            # Regenerate session ID
+            request.session['session_id'] = generate_custom_user_id()
+            request.session['session_timestamp'] = current_time
+
+def get_session_id(request: Request):
+    set_or_regenerate_session_id(request)
+    return request.session['session_id']
+
+# def get_client_ip():
+#     try:
+#         response = requests.get("https://api.ipify.org?format=json")
+#         if response.status_code == 200:
+#             data = response.json()
+#             client_ip = data.get("ip")
+#             return client_ip
+#     except Exception as e:
+#         # Handle any errors or exceptions here
+#         pass
