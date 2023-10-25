@@ -5,7 +5,6 @@ from helpers import get_season_data, send_to_discord, track_session
 from main import get_episode_data, templates
 
 
-
 def init_app(app: FastAPI):  # Define init_app function
 
     def session_middleware(request: Request, call_next):
@@ -16,6 +15,7 @@ def init_app(app: FastAPI):  # Define init_app function
 
     # Apply the session management middleware
     app.middleware("http")(session_middleware)
+
     @app.get('/season/{season_number}', response_class=HTMLResponse)
     def season(request: Request, season_number: int, seasons_data: dict = Depends(get_episode_data)):
         embed_data = track_session(request)
@@ -55,9 +55,10 @@ def init_app(app: FastAPI):  # Define init_app function
 
         Returns:
             HTMLResponse: The rendered HTML template with DisneyShorts data.
+            :param request:
+            :param short_data:
         """
-        short_shorts_data = short_data.get("Shorts", [])
-        print(short_shorts_data)
+        data = short_data.get("Shorts", [])
 
-        return templates.TemplateResponse('dshorts.html',
-                                          {"request": request, "short_shorts_data": short_shorts_data})
+        return templates.TemplateResponse('shorts.html',
+                                          {"request": request, "data": data})
