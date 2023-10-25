@@ -8,20 +8,38 @@
         <footer class="blockquote-footer">{{ character }}</footer>
     </blockquote>
 </div>
+<style>
+  /* Default styles for the card */
+  .card {
+    width: 18rem;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
 
+  /* Media query for small screens */
+  @media (max-width: 768px) {
+    .card {
+      /* Center the card horizontally */
+      left: 50%;
+      transform: translateX(-50%);
+      position: absolute;
+      bottom: 20px; /* Adjust as needed */
+    }
+  }
+</style>
 {% if last_watched_episode %}
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card shadow">
-                <img src="{{ last_watched_episode['Thumbnail'] }}" class="card-img-top img-fluid" alt="{{ last_watched_episode['Episode Title'] }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ last_watched_episode['Episode Title'] }}</h5>
-                </div>
-            </div>
-        </div>
+<div class="card" style="width: 18rem; position: fixed; bottom: 20px; right: 20px;">
+    <div class="card-header">
+        Last Watched Episode
     </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{ last_watched_episode['Episode Title'] }}</li>
+    </ul>
 </div>
+
+
+
 {% endif %}
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>

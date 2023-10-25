@@ -42,9 +42,10 @@ def init_app(app: FastAPI):  # Define init_app function
         embed_data = track_session(request)
         # Call the send_to_discord function to send data to Discord
         send_to_discord(embed_data)
+        store = request.session.get('last_episode_uuid')
 
         # Retrieve the last watched episode data based on the stored cookie value (e.g., episode UUID).
-        last_watched_episode_data = get_episode_by_uuid(last_watched_episode, episode_data)  # Modify this line
+        last_watched_episode_data = get_episode_by_uuid(store, episode_data)  # Modify this line
 
         # Get a random Simpsons quote.
         quote, character, image = get_random_simpsons_quote()

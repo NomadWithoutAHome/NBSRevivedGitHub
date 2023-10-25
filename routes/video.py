@@ -39,6 +39,7 @@ def init_app(app: FastAPI):  # Define init_app function
         if episode and 'Episode_vidsrc' in episode:
             # Set the "last_watched_episode" cookie with the UUID of the current episode.
             request.session['last_episode'] = episode['Episode Title']
+            request.session['last_episode_uuid'] = video_uuid_str
             response.set_cookie(key="last_watched_episode", value=video_uuid_str)
             return templates.TemplateResponse('video.html', {"request": request, "video_url": episode['Episode_vidsrc']})
         raise HTTPException(status_code=404, detail="Video not found")

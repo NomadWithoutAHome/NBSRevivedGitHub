@@ -1,6 +1,7 @@
 # helpers.py
 import json
-import mimetypes
+
+from datetime import datetime, timedelta
 from uuid import uuid4
 import random
 import time
@@ -144,18 +145,23 @@ def get_session(request: Request):
 
 def track_session(request: Request):
     client_ip = request.client.host
-    print(client_ip)
-    if client_ip:
-        # The client IP is in a comma-separated list; you might want to split it
-        print(client_ip)
+    print(f"Client IP: {client_ip}")
+
     session_id = request.session.get("session_id")
     visited_page = request.url.path
     last_episode = request.session.get("last_episode")
+    session_expires_timestamp = request.session.get("session_expiration", 0)
+
+    # Convert the session expiration timestamp to a human-readable date and time (m/d/y h:m:s AM/PM format)
+    session_expires = datetime.fromtimestamp(session_expires_timestamp).strftime('%m/%d/%Y %I:%M:%S %p')
 
     discord_embed_data = {
         "title": "User Session Tracking",
-        "description": f"Session ID: {session_id}\nVisited Page: {visited_page}\nLast Episode: {last_episode}",
+        "description": f"Session ID: {session_id}\nVisited Page: {visited_page}\nLast Episode: {last_episode}\nSession Expires: {session_expires}",
     }
+
+    return discord_embed_data
+
 
     return discord_embed_data
 
@@ -170,14 +176,16 @@ def set_or_regenerate_session_id(request: Request):
         # Session ID doesn't exist, or session timestamp doesn't exist (e.g., new session)
         request.session['session_id'] = generate_custom_user_id()
         request.session['session_timestamp'] = int(time.time())
+        request.session['session_expiration'] = (datetime.now() + timedelta(days=30)).timestamp()
     else:
-        # Check if the session has expired (e.g., after 30 minutes)
+        # Check if the session has expired
         current_time = int(time.time())
-        session_timestamp = request.session['session_timestamp']
-        if current_time - session_timestamp >= 1800:  # 1800 seconds = 30 minutes
-            # Regenerate session ID
+        session_expiration = request.session.get('session_expiration', 0)
+        if current_time > session_expiration:
+            # Regenerate session ID and update the expiration time
             request.session['session_id'] = generate_custom_user_id()
             request.session['session_timestamp'] = current_time
+            request.session['session_expiration'] = (datetime.now() + timedelta(days=30)).timestamp()
 
 def get_session_id(request: Request):
     set_or_regenerate_session_id(request)
