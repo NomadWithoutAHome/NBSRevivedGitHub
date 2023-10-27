@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.responses import HTMLResponse
 
-from helpers import get_season_data, send_to_discord, track_session
+from helpers import get_season_data, send_to_discord, track_session, get_session_id
 from main import get_episode_data, templates
 
 
@@ -17,7 +17,7 @@ def init_app(app: FastAPI):  # Define init_app function
     app.middleware("http")(session_middleware)
 
     @app.get('/season/{season_number}', response_class=HTMLResponse)
-    def season(request: Request, season_number: int, seasons_data: dict = Depends(get_episode_data)):
+    def season(request: Request, season_number: int, session_id: str = Depends(get_session_id), seasons_data: dict = Depends(get_episode_data)):
         embed_data = track_session(request)
         # Call the send_to_discord function to send data to Discord
         send_to_discord(embed_data)

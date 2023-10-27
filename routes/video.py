@@ -3,7 +3,7 @@ from uuid import UUID
 from fastapi import FastAPI, Request, Response, HTTPException, Depends  # Import Depends
 from fastapi.responses import HTMLResponse
 
-from helpers import get_episode_by_uuid, send_to_discord, track_session  # Import get_episode_by_uuid and track_session
+from helpers import get_episode_by_uuid, send_to_discord, track_session , get_session_id
 from main import get_episode_data, templates  # Import get_episode_data and templates from main.py
 
 
@@ -18,7 +18,7 @@ def init_app(app: FastAPI):  # Define init_app function
     # Apply the session management middleware
     app.middleware("http")(session_middleware)
     @app.get('/video/{video_uuid}', response_class=HTMLResponse)
-    def video(request: Request, response: Response, video_uuid: UUID, episode_data: dict = Depends(get_episode_data)):  # Add this line
+    def video(request: Request, response: Response, video_uuid: UUID, session_id: str = Depends(get_session_id), episode_data: dict = Depends(get_episode_data)):  # Add this line
         """
         Render the video.html template based on the provided UUID and set the last-watched episode cookie.
 

@@ -2,13 +2,13 @@ from typing import Dict, Union
 
 from fastapi import HTTPException, FastAPI, Depends
 
-from helpers import get_video_url_by_title
+from helpers import get_video_url_by_title , get_session_id
 from main import get_episode_data
 
 
 def init_app(app: FastAPI):
     @app.get('/video_url/{episode_title}', response_model=Dict[str, Union[str, int]])
-    def video_url(episode_title: str, episode_data: dict = Depends(get_episode_data)):
+    def video_url(episode_title: str,session_id: str = Depends(get_session_id), episode_data: dict = Depends(get_episode_data)):
         """
         Return the video URL based on the provided episode title.
 

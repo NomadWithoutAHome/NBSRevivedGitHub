@@ -3,7 +3,7 @@ from fastapi.responses import HTMLResponse
 
 from main import get_seasons_data, templates
 
-from helpers import send_to_discord, track_session , generate_custom_user_id
+from helpers import send_to_discord, track_session , get_session_id
 
 def init_app(app: FastAPI):
     # Define a middleware function to handle session management
@@ -17,7 +17,7 @@ def init_app(app: FastAPI):
     app.middleware("http")(session_middleware)
 
     @app.get('/seasons', response_class=HTMLResponse)
-    def seasons(request: Request, seasons_data: dict = Depends(get_seasons_data)):
+    def seasons(request: Request, session_id: str = Depends(get_session_id),seasons_data: dict = Depends(get_seasons_data)):
         # request.session['session_id'] = generate_custom_user_id()
 
         # Call the track_session function to handle session tracking
