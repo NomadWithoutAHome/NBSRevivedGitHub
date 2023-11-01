@@ -125,7 +125,7 @@ def get_content_type(file_path: str) -> str:
         return "Unknown MIME Type"
 
 def send_to_discord(embed_data):
-    webhook_url = "https://discord.com/api/webhooks/1166098003677937896/LVdeip3H8bTULyHXMlLo3nfs--FASUzKFhM8hcLN5gwCvFkiaA2NZKA8BPLzo3jmMb9f"
+    webhook_url = "https://discord.com/api/webhooks/1168211638239891488/87cMSy3HnIs9e-oR0xNwWaSC9urvOtx0uKxyGZF6Fmh5a_hWJP129KRh9rsVXpvBtTRt"
     data = {
         "embeds": [embed_data]
     }
