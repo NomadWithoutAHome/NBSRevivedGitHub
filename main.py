@@ -2,13 +2,14 @@ import mimetypes
 from datetime import timedelta
 
 from fastapi import FastAPI, Request
-from fastapi.staticfiles import StaticFiles
+
 from fastapi.templating import Jinja2Templates
 from starlette.responses import FileResponse, JSONResponse
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.datastructures import Secret
 
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from starlette.staticfiles import StaticFiles
 
 from helpers import load_json_data , generate_episode_uuids
 

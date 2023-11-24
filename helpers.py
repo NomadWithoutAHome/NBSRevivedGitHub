@@ -38,6 +38,48 @@ def generate_episode_uuids(episode_data, episode_uuids):
     with open('static/data/episode_data.json', 'w') as file:
         json.dump(episode_data, file, indent=4)
 
+def get_current_season(episode, episode_data):
+    for season, episodes in episode_data.items():
+        if episode in episodes:
+            return season
+    return None
+
+def get_next_episode(current_season, current_episode_number, episode_data):
+    next_episode_number = current_episode_number + 1
+    next_episode = None
+
+    if current_season in episode_data:
+        season_episodes = episode_data[current_season]
+        for ep in season_episodes:
+            if int(ep['Episode Number']) == next_episode_number:
+                next_episode = ep
+                break
+
+        # If next episode is not found in the current season, check the next season
+        if next_episode is None:
+            # Check if the current season starts with "Season"
+            if current_season.startswith("Season"):
+                try:
+                    next_season_number = str(int(current_season[len("Season "):]) + 1)
+                except ValueError:
+                    # Handle the case where the season number cannot be converted to an integer
+                    next_season_number = None
+
+                if next_season_number and next_season_number in episode_data:
+                    next_season_episodes = episode_data[next_season_number]
+
+                    # Check if there are episodes in the next season
+                    if next_season_episodes:
+                        next_episode = next_season_episodes[0]  # Get the first episode of the next season
+                    else:
+                        # If no episodes in the next season, recursively call the function for the next season
+                        next_episode = get_next_episode(next_season_number, 0, episode_data)
+
+    return next_episode
+
+
+
+
 # Get an episode title by its UUID.
 def get_episode_title_by_uuid(uuid_str, episode_data):
     for season_name, season_episodes in episode_data.items():
