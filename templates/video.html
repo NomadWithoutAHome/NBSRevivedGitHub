@@ -28,7 +28,7 @@
     <div class="row">
         <div class="col-lg-12 d-flex justify-content-center">
             {% if next_episode %}
-                <a href="{{ url_for('video', video_uuid=next_episode.uuid) }}" class="btn btn-primary">Play Next Episode: {{ next_episode['Episode Title'] }}</a>
+                <a href="{{ url_for('video', video_uuid=next_episode.uuid) }}" class="btn btn-primary marge-blue-button">Play Next Episode: {{ next_episode['Episode Title'] }}</a>
             {% else %}
                 <p>End of Current Seasons Episodes</p>
             {% endif %}
